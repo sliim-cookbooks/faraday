@@ -10,3 +10,7 @@ AllCops:
     - resources/**/*
     - spec/**/*
     - test/**/*
+
+LineLength:
+  Exclude:
+    - attributes/**/*
