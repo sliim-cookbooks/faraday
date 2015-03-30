@@ -9,4 +9,10 @@ platforms:
 suites:
 - name: faraday
   run_list:
+  - recipe[couchdb]
   - recipe[faraday]
+  attributes:
+    couchdb:
+      httpd:
+        bind_address: 127.0.0.1
+        database_dir: /var/lib/couchdb

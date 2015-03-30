@@ -16,14 +16,6 @@
 # limitations under the License.
 #
 
-default['faraday']['packages'] = []
 default['faraday']['git_repository'] = 'https://github.com/infobyte/faraday'
 default['faraday']['git_reference'] = 'master'
 default['faraday']['install_dir'] = '/opt/faraday'
-
-case node['platform']
-when 'debian'
-  default['faraday']['packages'] = ['python-pip', 'python-dev', 'python-qt4',
-                                    'ipython', 'libc6-dev', 'libpq-dev',
-                                    'couchdb', 'git-core']
-end

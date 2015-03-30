@@ -11,5 +11,3 @@ version '0.1.0'
 recipe 'faraday::default', 'Basic install of Faraday'
 
 supports 'debian'
-
-depends 'apt'
