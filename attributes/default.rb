@@ -19,3 +19,4 @@
 default['faraday']['git_repository'] = 'https://github.com/infobyte/faraday'
 default['faraday']['git_reference'] = 'master'
 default['faraday']['install_dir'] = '/opt/faraday'
+default['faraday']['pip_packages'] = %w(coudbkit mockito whoosh restkit flask)

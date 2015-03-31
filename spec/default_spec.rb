@@ -24,9 +24,9 @@ describe 'faraday::default' do
             cwd: '/opt/faraday-dev')
   end
 
-  it 'should install python requirements' do
-    expect(subject).to run_execute('install-pip-requirements')
-      .with(command: 'pip install -r requirements.txt',
+  it 'should install python packages' do
+    expect(subject).to run_execute('install-pip-packages')
+      .with(command: 'pip install coudbkit mockito whoosh restkit flask',
             cwd: '/opt/faraday-dev')
   end
 end

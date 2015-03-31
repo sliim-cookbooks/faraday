@@ -26,7 +26,7 @@ execute 'install-faraday' do
   cwd node['faraday']['install_dir']
 end
 
-execute 'install-pip-requirements' do
-  command 'pip install -r requirements.txt'
+execute 'install-pip-packages' do
+  command "pip install #{node['faraday']['pip_packages'].join(' ')}"
   cwd node['faraday']['install_dir']
 end
