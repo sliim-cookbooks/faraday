@@ -8,7 +8,7 @@ describe 'faraday::config' do
     ChefSpec::SoloRunner.new do |node|
       node.set['faraday']['user'] = 'faraday'
       node.set['faraday']['group'] = 'faraday'
-      node.set['faraday']['user_home'] = '/home/faraday'
+      node.set['faraday']['home'] = '/home/faraday'
       node.set['faraday']['config']['appname'] = 'Faraday - PTI'
       node.set['faraday']['config']['version'] = '13.37'
       node.set['faraday']['config_attrs']['appname'] = { foo: 'bar' }

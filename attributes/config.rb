@@ -18,7 +18,11 @@
 
 default['faraday']['user'] = 'root'
 default['faraday']['group'] = 'root'
-default['faraday']['user_home'] = '/root'
+if node['faraday']['user'] == 'root'
+  default['faraday']['home'] = '/root'
+else
+  default['faraday']['home'] = "/home/#{node['faraday']['user']}"
+end
 
 default['faraday']['config']['appname'] = 'Faraday - Penetration Test IDE'
 default['faraday']['config']['version'] = '1.0'

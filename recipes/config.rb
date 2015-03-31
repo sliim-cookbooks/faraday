@@ -16,13 +16,13 @@
 # limitations under the License.
 #
 
-directory "#{node['faraday']['user_home']}/.faraday/config" do
+directory "#{node['faraday']['home']}/.faraday/config" do
   owner node['faraday']['user']
   group node['faraday']['group']
   recursive true
 end
 
-template "#{node['faraday']['user_home']}/.faraday/config/config.xml" do
+template "#{node['faraday']['home']}/.faraday/config/config.xml" do
   owner node['faraday']['user']
   group node['faraday']['group']
   source 'config.xml.erb'

@@ -6,8 +6,11 @@ https://www.faradaysec.com
 
 Requirements
 ------------
-#### Cookbooks
-TODO
+#### Packages
+- `git-core`
+
+#### Services
+- `couchdb`
 
 #### Platforms
 The following platforms and versions are tested and supported using Opscode's test-kitchen.
@@ -16,7 +19,6 @@ The following platforms and versions are tested and supported using Opscode's te
 Attributes
 ----------
 #### faraday::default
-TODO
 <table>
 <tr>
 <th>Key</th>
@@ -25,17 +27,68 @@ TODO
 <th>Default</th>
 </tr>
 <tr>
-<td><tt>['faraday']['']</tt></td>
+<td><tt>['faraday']['git_repository']</tt></td>
 <td>String</td>
-<td></td>
-<td><tt></tt></td>
+<td>Faraday repository to fetch</td>
+<td><tt>https://github.com/infobyte/faraday</tt></td>
+</tr>
+<tr>
+<td><tt>['faraday']['git_reference']</tt></td>
+<td>String</td>
+<td>Git reference to fetch</td>
+<td><tt>master</tt></td>
+</tr>
+<tr>
+<td><tt>['faraday']['install_dir']</tt></td>
+<td>String</td>
+<td>Directory where Faraday will be stored</td>
+<td><tt>/opt/faraday</tt></td>
+</tr>
+<tr>
+<td><tt>['faraday']['pip_packages']</tt></td>
+<td>String</td>
+<td>Python package to install</td>
+<td><tt>coudbkit mockito whoosh restkit flask</tt></td>
 </tr>
 </table>
+
+#### faraday::config
+<table>
+<tr>
+<th>Key</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+<tr>
+<td><tt>['faraday']['user']</tt></td>
+<td>String</td>
+<td>User to set configuration, must exists.</td>
+<td><tt>root</tt></td>
+</tr>
+<tr>
+<td><tt>['faraday']['group']</tt></td>
+<td>String</td>
+<td>Group for file permission, must exists.</td>
+<td><tt>root</tt></td>
+</tr>
+<tr>
+<td><tt>['faraday']['home']</tt></td>
+<td>String</td>
+<td>User's home directory</td>
+<td><tt>/root</tt></td>
+</tr>
+</table>
+
+All others attributes in `['faraday']['config']` namespace will generate dynamically the
+configuration file as XML format in `$HOME/.faraday/config/config.xml`.
+
+Use the `['faraday']['config_attrs']` namespace to set xml attributes. See `attributes/config.rb` for more details.
 
 Usage
 -----
 #### faraday::default
-Just include `faraday` in your node's `run_list`:
+Include `faraday` in your node's `run_list` to install faraday and its requirements:
 
 ```json
 {
@@ -43,6 +96,26 @@ Just include `faraday` in your node's `run_list`:
   "run_list": [
     "recipe[faraday]"
   ]
+}
+```
+
+#### faraday::config
+Include `faraday::config` in your node's `run_list` to configure faraday for a user:
+
+```json
+{
+  "name":"my_node",
+  "run_list": [
+    "recipe[faraday::config]"
+  ],
+  "attributes": {
+    "faraday": {
+      "user": "my_user",
+      "config": {
+        ... configuration here ...
+      }
+    }
+  }
 }
 ```
 
