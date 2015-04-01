@@ -6,9 +6,6 @@ https://www.faradaysec.com
 
 Requirements
 ------------
-#### Packages
-- `git-core`
-
 #### Services
 - `couchdb`
 
@@ -45,10 +42,16 @@ Attributes
 <td><tt>/opt/faraday</tt></td>
 </tr>
 <tr>
+<td><tt>['faraday']['packages']</tt></td>
+<td>String</td>
+<td>Package to install</td>
+<td><tt>git-core ipython python-pip python-dev</tt></td>
+</tr>
+<tr>
 <td><tt>['faraday']['pip_packages']</tt></td>
 <td>String</td>
 <td>Python package to install</td>
-<td><tt>coudbkit mockito whoosh restkit flask</tt></td>
+<td><tt>couchdbkit mockito whoosh restkit flask</tt></td>
 </tr>
 </table>
 

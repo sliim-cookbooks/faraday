@@ -16,14 +16,13 @@
 # limitations under the License.
 #
 
+node['faraday']['packages'].each do |pkg|
+  package pkg
+end
+
 git node['faraday']['install_dir'] do
   repository node['faraday']['git_repository']
   reference node['faraday']['git_reference']
-end
-
-execute 'install-faraday' do
-  command './install.sh'
-  cwd node['faraday']['install_dir']
 end
 
 execute 'install-pip-packages' do

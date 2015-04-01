@@ -12,21 +12,21 @@ describe 'faraday::default' do
     end.converge described_recipe
   end
 
+  it 'should install required packages' do
+    ['git-core', 'ipython', 'python-pip', 'python-dev'].each do |pkg|
+      expect(subject).to install_package(pkg)
+    end
+  end
+
   it 'should clone git repository' do
     expect(subject).to sync_git('/opt/faraday-dev')
       .with(repository: 'git://remote/faraday.git',
             reference: 'dev')
   end
 
-  it 'should install faraday with embbeded script' do
-    expect(subject).to run_execute('install-faraday')
-      .with(command: './install.sh',
-            cwd: '/opt/faraday-dev')
-  end
-
   it 'should install python packages' do
     expect(subject).to run_execute('install-pip-packages')
-      .with(command: 'pip install coudbkit mockito whoosh restkit flask',
+      .with(command: 'pip install couchdbkit mockito whoosh restkit flask',
             cwd: '/opt/faraday-dev')
   end
 end

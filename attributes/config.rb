@@ -17,7 +17,7 @@
 #
 
 default['faraday']['user'] = 'root'
-default['faraday']['group'] = 'root'
+default['faraday']['group'] = node['faraday']['user']
 if node['faraday']['user'] == 'root'
   default['faraday']['home'] = '/root'
 else

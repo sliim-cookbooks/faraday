@@ -9,13 +9,15 @@ platforms:
 suites:
 - name: faraday
   run_list:
+  - recipe[apt]
   - recipe[couchdb]
   - recipe[faraday]
+  - recipe[faraday::config]
   attributes:
     couchdb:
       httpd:
         bind_address: 127.0.0.1
         database_dir: /var/lib/couchdb
     faraday:
-      config:
-        user: vagrant
+      install_dir: /opt/faraday-test
+      user: vagrant
