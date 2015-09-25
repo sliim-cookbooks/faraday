@@ -88,6 +88,40 @@ configuration file as XML format in `$HOME/.faraday/config/config.xml`.
 
 Use the `['faraday']['config_attrs']` namespace to set xml attributes. See `attributes/config.rb` for more details.
 
+#### faraday::cscan
+<table>
+<tr>
+<th>Key</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+<tr>
+<td><tt>['faraday']['cscan']['git_repository']</tt></td>
+<td>String</td>
+<td>cscan repository.</td>
+<td><tt>https://github.com/infobyte/cscan</tt></td>
+</tr>
+<tr>
+<td><tt>['faraday']['cscan']['git_reference']</tt></td>
+<td>String</td>
+<td>Reference of the repository to sync.</td>
+<td><tt>master</tt></td>
+</tr>
+<tr>
+<td><tt>['faraday']['cscan']['pip_packages']</tt></td>
+<td>Array</td>
+<td>Python package to install</td>
+<td><tt>[python-owasp-zap-v2, w3af-api-client]</tt></td>
+</tr>
+<tr>
+<td><tt>['faraday']['cscan']['config']</tt></td>
+<td>Hash</td>
+<td>Configure cscan with some values, this set CSCAN_DIR/config.py</td>
+<td><tt>See atrribute file.</tt></td>
+</tr>
+</table>
+
 Usage
 -----
 #### faraday::default
@@ -116,6 +150,27 @@ Include `faraday::config` in your node's `run_list` to configure faraday for a u
       "user": "my_user",
       "config": {
         ... configuration here ...
+      }
+    }
+  }
+}
+```
+
+#### faraday::cscan
+Include `faraday::cscan` in your node's `run_list` to install continuous scanning:
+
+```json
+{
+  "name":"my_node",
+  "run_list": [
+    "recipe[faraday::cscan]"
+  ],
+  "attributes": {
+    "faraday": {
+      "cscan": {
+        "config": {
+          ... configuration here ...
+        }
       }
     }
   }
