@@ -1,0 +1,27 @@
+---
+driver:
+  name: docker
+  binary: docker
+  use_sudo: false
+
+provisioner:
+  name: chef_zero
+
+platforms:
+  - name: debian-7
+
+suites:
+  - name: faraday
+    run_list:
+      - recipe[apt]
+      - recipe[couchdb]
+      - recipe[faraday]
+      - recipe[faraday::config]
+    attributes:
+      couchdb:
+        httpd:
+          bind_address: 127.0.0.1
+          database_dir: /var/lib/couchdb
+      faraday:
+        install_dir: /opt/faraday-test
+        user: root

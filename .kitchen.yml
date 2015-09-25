@@ -20,4 +20,4 @@ suites:
         database_dir: /var/lib/couchdb
     faraday:
       install_dir: /opt/faraday-test
-      user: vagrant
+      user: root

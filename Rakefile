@@ -5,7 +5,7 @@ def bundle_exec(command)
 end
 
 task :vendor do
-  sh 'test -d cookbooks && rm -r cookbooks || exit 0'
+  rm_rf 'cookbooks'
   bundle_exec 'berks vendor cookbooks'
 end
 
