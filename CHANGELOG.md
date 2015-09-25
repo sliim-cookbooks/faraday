@@ -3,6 +3,10 @@ faraday CHANGELOG
 
 This file is used to list changes made in each version of the faraday cookbook.
 
+0.2.1
+-----
+- Readme update for faraday::cscan
+
 0.2.0
 -----
 - faraday::cscan: Installs Faraday continuous scanning tool
