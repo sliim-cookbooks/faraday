@@ -13,6 +13,7 @@ suites:
   - recipe[couchdb]
   - recipe[faraday]
   - recipe[faraday::config]
+  - recipe[faraday::cscan]
   attributes:
     couchdb:
       httpd:
