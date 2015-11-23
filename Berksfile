@@ -3,5 +3,6 @@ metadata
 
 group :integration do
   cookbook 'apt'
-  cookbook 'couchdb'
+  cookbook 'build-essential'
+  cookbook 'couchdb', github: 'sliim-cookbooks/couchdb-cookbook'
 end

@@ -9,20 +9,26 @@ provisioner:
 
 platforms:
   - name: debian-7
+    run_list:
+      - recipe[apt]
+      - recipe[couchdb]
+  - name: debian-8
+    run_list:
+      - recipe[apt]
+      - recipe[build-essential]
+      - recipe[couchdb::source]
+    attributes:
+      couch_db:
+        src_version: 1.6.1
+        src_checksum: 5a601b173733ce3ed31b654805c793aa907131cd70b06d03825f169aa48c8627
 
 suites:
   - name: faraday
     run_list:
-      - recipe[apt]
-      - recipe[couchdb]
       - recipe[faraday]
       - recipe[faraday::config]
       - recipe[faraday::cscan]
     attributes:
-      couchdb:
-        httpd:
-          bind_address: 127.0.0.1
-          database_dir: /var/lib/couchdb
       faraday:
         install_dir: /opt/faraday-test
         user: root
