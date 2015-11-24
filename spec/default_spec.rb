@@ -12,10 +12,8 @@ describe 'faraday::default' do
     end.converge described_recipe
   end
 
-  it 'installs packages' do
-    ['git-core', 'ipython', 'python-pip', 'python-dev'].each do |pkg|
-      expect(subject).to install_package(pkg)
-    end
+  it 'installs package[git-core]' do
+    expect(subject).to install_package('git-core')
   end
 
   it 'syncs git[/opt/faraday-dev]' do
@@ -24,9 +22,19 @@ describe 'faraday::default' do
             reference: 'dev')
   end
 
-  it 'runs execute[install-pip-packages]' do
-    expect(subject).to run_execute('install-pip-packages')
-      .with(command: 'pip install couchdbkit mockito whoosh restkit flask',
-            cwd: '/opt/faraday-dev')
+  it 'installs python_runtime[2]' do
+    expect(subject).to install_python_runtime('2')
+  end
+
+  it 'creates python_virtualenv[faraday-venv]' do
+    expect(subject).to create_python_virtualenv('faraday-venv')
+      .with(python: '/usr/bin/python',
+            path: '/opt/faraday-dev/.venv')
+  end
+
+  it 'installs pip_requirements[/opt/faraday-dev/requirements.txt]' do
+    expect(subject).to install_pip_requirements('/opt/faraday-dev/requirements.txt')
+      .with(python: '/usr/bin/python',
+            virtualenv: 'faraday-venv')
   end
 end

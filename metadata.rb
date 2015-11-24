@@ -12,6 +12,8 @@ recipe 'faraday::default', 'Basic install of Faraday'
 recipe 'faraday::config', 'Configure Faraday for a specific user'
 recipe 'faraday::cscan', 'Install continuous scanning tool'
 
+depends 'poise-python'
+
 supports 'debian', '= 7.0'
 
 source_url 'https://github.com/sliim-cookbooks/faraday' if

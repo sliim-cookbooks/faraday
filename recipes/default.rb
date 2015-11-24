@@ -25,7 +25,14 @@ git node['faraday']['install_dir'] do
   reference node['faraday']['git_reference']
 end
 
-execute 'install-pip-packages' do
-  command "pip install #{node['faraday']['pip_packages'].join(' ')}"
-  cwd node['faraday']['install_dir']
+python_runtime node['faraday']['python_runtime']
+
+python_virtualenv 'faraday-venv' do
+  python node['faraday']['python_runtime']
+  path "#{node['faraday']['install_dir']}/.venv"
+end
+
+pip_requirements "#{node['faraday']['install_dir']}/requirements.txt" do
+  python node['faraday']['python_runtime']
+  virtualenv 'faraday-venv'
 end

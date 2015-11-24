@@ -11,77 +11,28 @@ Requirements
 
 #### Platforms
 The following platforms and versions are tested and supported using Opscode's test-kitchen.
-- Debian 7
+- `Debian 7`
+- `Debian 8`
 
 Attributes
 ----------
 #### faraday::default
-<table>
-<tr>
-<th>Key</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
-</tr>
-<tr>
-<td><tt>['faraday']['git_repository']</tt></td>
-<td>String</td>
-<td>Faraday repository to fetch</td>
-<td><tt>https://github.com/infobyte/faraday</tt></td>
-</tr>
-<tr>
-<td><tt>['faraday']['git_reference']</tt></td>
-<td>String</td>
-<td>Git reference to fetch</td>
-<td><tt>master</tt></td>
-</tr>
-<tr>
-<td><tt>['faraday']['install_dir']</tt></td>
-<td>String</td>
-<td>Directory where Faraday will be stored</td>
-<td><tt>/opt/faraday</tt></td>
-</tr>
-<tr>
-<td><tt>['faraday']['packages']</tt></td>
-<td>String</td>
-<td>Package to install</td>
-<td><tt>git-core ipython python-pip python-dev</tt></td>
-</tr>
-<tr>
-<td><tt>['faraday']['pip_packages']</tt></td>
-<td>String</td>
-<td>Python package to install</td>
-<td><tt>couchdbkit mockito whoosh restkit flask</tt></td>
-</tr>
-</table>
+
+|             Key             |  Type   |                            Description                              |
+| --------------------------- | ------- | ------------------------------------------------------------------- |
+| `[faraday][packages]`       | Array   | Package list to install (default: [git-core, libpq-dev])            |
+| `[faraday][git_repository]` | String  | Faraday repository (default: https://github.com/infobyte/faraday)   |
+| `[faraday][git_reference]`  | String  | Faraday reference or version (default: master)                      |
+| `[faraday][install_dir]`    | String  | Faraday install directory (default: /opt/faraday)                   |
+| `[faraday][python_runtime]` | String  | Python runtime to use, use for `poise-python` cookbook (default: 2) |
 
 #### faraday::config
-<table>
-<tr>
-<th>Key</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
-</tr>
-<tr>
-<td><tt>['faraday']['user']</tt></td>
-<td>String</td>
-<td>User to set configuration, must exists.</td>
-<td><tt>root</tt></td>
-</tr>
-<tr>
-<td><tt>['faraday']['group']</tt></td>
-<td>String</td>
-<td>Group for file permission, must exists.</td>
-<td><tt>root</tt></td>
-</tr>
-<tr>
-<td><tt>['faraday']['home']</tt></td>
-<td>String</td>
-<td>User's home directory</td>
-<td><tt>/root</tt></td>
-</tr>
-</table>
+
+|             Key    |  Type  |                       Description                      |
+| ------------------ | ------ | ------------------------------------------------------ |
+| `[faraday][user]`  | String | User to set configuration, must exists (default: root) |
+| `[faraday][group]` | String | Group for file permission, must exists (default: root) |
+| `[faraday][home]`  | String | User's home directory (default: /root)                 |
 
 All others attributes in `['faraday']['config']` namespace will generate dynamically the
 configuration file as XML format in `$HOME/.faraday/config/config.xml`.

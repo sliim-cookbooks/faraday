@@ -16,8 +16,8 @@
 # limitations under the License.
 #
 
+default['faraday']['packages'] = ['git-core', 'libpq-dev']
 default['faraday']['git_repository'] = 'https://github.com/infobyte/faraday'
 default['faraday']['git_reference'] = 'master'
 default['faraday']['install_dir'] = '/opt/faraday'
-default['faraday']['packages'] = ['git-core', 'ipython', 'python-pip', 'python-dev']
-default['faraday']['pip_packages'] = %w(couchdbkit mockito whoosh restkit flask)
+default['faraday']['python_runtime'] = '2'
