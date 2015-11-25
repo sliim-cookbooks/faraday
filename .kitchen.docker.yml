@@ -32,3 +32,12 @@ suites:
       faraday:
         install_dir: /opt/faraday-test
         user: root
+  - name: faraday-server
+    run_list:
+      - recipe[faraday]
+      - recipe[faraday::service]
+    attributes:
+      faraday:
+        install_dir: /opt/faraday-test
+        service:
+          DAEMON_ARGS: --gui=no-gui

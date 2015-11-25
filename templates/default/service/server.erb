@@ -1,0 +1,5 @@
+#!/bin/bash
+pushd <%= node['faraday']['install_dir'] %>
+source .venv/bin/activate
+./faraday.py $@ >>faraday.log
+popd
