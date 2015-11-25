@@ -18,7 +18,7 @@ Attributes
 ----------
 #### faraday::default
 
-|             Key             |  Type   |                            Description                              |
+|  Key                        |  Type   |  Description                                                        |
 | --------------------------- | ------- | ------------------------------------------------------------------- |
 | `[faraday][packages]`       | Array   | Package list to install (default: [git-core, libpq-dev])            |
 | `[faraday][git_repository]` | String  | Faraday repository (default: https://github.com/infobyte/faraday)   |
@@ -28,7 +28,7 @@ Attributes
 
 #### faraday::config
 
-|             Key    |  Type  |                       Description                      |
+|  Key               |  Type  |  Description                                           |
 | ------------------ | ------ | ------------------------------------------------------ |
 | `[faraday][user]`  | String | User to set configuration, must exists (default: root) |
 | `[faraday][group]` | String | Group for file permission, must exists (default: root) |
@@ -38,6 +38,12 @@ All others attributes in `['faraday']['config']` namespace will generate dynamic
 configuration file as XML format in `$HOME/.faraday/config/config.xml`.
 
 Use the `['faraday']['config_attrs']` namespace to set xml attributes. See `attributes/config.rb` for more details.
+
+#### faraday::service
+
+|  Key                 |  Type  |  Description                                          |
+| -------------------- | ------ | ----------------------------------------------------- |
+| `[faraday][service]` |  Hash  | Hash of variables to override for service init script |
 
 #### faraday::cscan
 <table>
@@ -101,6 +107,26 @@ Include `faraday::config` in your node's `run_list` to configure faraday for a u
       "user": "my_user",
       "config": {
         ... configuration here ...
+      }
+    }
+  }
+}
+```
+
+#### faraday::service
+Include `faraday::service` in your node's `run_list` to configure faraday as a server:
+
+```json
+{
+  "name":"my_node",
+  "run_list": [
+    "recipe[faraday]",
+    "recipe[faraday::service]"
+  ],
+  "attributes": {
+    "faraday": {
+      "service": {
+        "DAEMON_ARGS": "--gui=no-gui --port 31337"
       }
     }
   }
