@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # Cookbook Name:: faraday
-# Recipe:: config
+# Provider:: config
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,9 +16,20 @@
 # limitations under the License.
 #
 
-faraday_config "#{node['faraday']['home']}/.faraday/config" do
-  user node['faraday']['user']
-  group node['faraday']['group']
-  config node['faraday']['config']
-  config_attrs node['faraday']['config_attrs']
+action :create do
+  directory new_resource.path do
+    owner new_resource.user
+    group new_resource.group
+    recursive true
+  end
+
+  template "#{new_resource.path}/config.xml" do
+    owner new_resource.user
+    group new_resource.group
+    source 'config.xml.erb'
+    variables config: new_resource.config,
+              attrs: new_resource.config_attrs
+  end
+
+  new_resource.updated_by_last_action(true)
 end

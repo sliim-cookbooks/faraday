@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # Cookbook Name:: faraday
-# Recipe:: config
+# Library:: matchers
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,9 +16,8 @@
 # limitations under the License.
 #
 
-faraday_config "#{node['faraday']['home']}/.faraday/config" do
-  user node['faraday']['user']
-  group node['faraday']['group']
-  config node['faraday']['config']
-  config_attrs node['faraday']['config_attrs']
+if defined?(ChefSpec)
+  def create_faraday_config(name)
+    ChefSpec::Matchers::ResourceMatcher.new(:faraday_config, :create, name)
+  end
 end

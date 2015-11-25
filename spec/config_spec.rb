@@ -5,7 +5,7 @@ require 'chefspec/berkshelf'
 
 describe 'faraday::config' do
   let(:subject) do
-    ChefSpec::SoloRunner.new do |node|
+    ChefSpec::SoloRunner.new(step_into: ['faraday_config']) do |node|
       node.set['faraday']['user'] = 'faraday'
       node.set['faraday']['group'] = 'faraday'
       node.set['faraday']['home'] = '/home/faraday'
