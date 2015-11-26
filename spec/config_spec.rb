@@ -6,8 +6,8 @@ require 'chefspec/berkshelf'
 describe 'faraday::config' do
   let(:subject) do
     ChefSpec::SoloRunner.new(step_into: ['faraday_config']) do |node|
-      node.set['faraday']['user'] = 'faraday'
-      node.set['faraday']['group'] = 'faraday'
+      node.set['faraday']['user'] = 'faradev'
+      node.set['faraday']['group'] = 'faradev'
       node.set['faraday']['home'] = '/home/faraday'
       node.set['faraday']['config']['appname'] = 'Faraday - PTI'
       node.set['faraday']['config']['version'] = '13.37'
@@ -15,10 +15,16 @@ describe 'faraday::config' do
     end.converge described_recipe
   end
 
+  it 'creates faraday_config[/home/faraday/.faraday/config]' do
+    expect(subject).to create_faraday_config('/home/faraday/.faraday/config')
+      .with(user: 'faradev',
+            group: 'faradev')
+  end
+
   it 'creates directory[/home/faraday/.faraday/config]' do
     expect(subject).to create_directory('/home/faraday/.faraday/config')
-      .with(owner: 'faraday',
-            group: 'faraday',
+      .with(owner: 'faradev',
+            group: 'faradev',
             recursive: true)
   end
 
@@ -29,8 +35,8 @@ describe 'faraday::config' do
                %r{<version>13.37</version>}]
 
     expect(subject).to create_template(config_file)
-      .with(owner: 'faraday',
-            group: 'faraday',
+      .with(owner: 'faradev',
+            group: 'faradev',
             source: 'config.xml.erb')
 
     matches.each do |m|
