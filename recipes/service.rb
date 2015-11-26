@@ -15,6 +15,13 @@ user 'faraday' do
   system true
 end
 
+faraday_config "#{node['faraday']['install_dir']}/.faraday/config" do
+  user 'faraday'
+  group 'root'
+  config node['faraday']['config']
+  config_attrs node['faraday']['config_attrs']
+end
+
 template "#{node['faraday']['install_dir']}/server" do
   source 'service/server.erb'
   owner 'root'
