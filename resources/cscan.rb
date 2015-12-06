@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # Cookbook Name:: faraday
-# Recipe:: cscan
+# Resource:: cscan
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,18 +16,17 @@
 # limitations under the License.
 #
 
-include_recipe 'faraday'
+actions :install, :configure
 
-node['faraday']['cscan']['pip_packages'].each do |pkg|
-  python_package pkg do
-    python node['faraday']['python_runtime']
-    virtualenv 'faraday-venv'
-  end
-end
+attribute :name, kind_of: String
+attribute :ips, kind_of: Array, default: []
+attribute :websites, kind_of: Array, default: []
+attribute :config, kind_of: Hash, default: node['faraday']['cscan']['config']
+attribute :cookbook, kind_of: String, default: 'faraday'
+attribute :crond, kind_of: Hash, default: {}
 
-faraday_cscan 'default' do
-  action :configure
-  config node['faraday']['cscan']['config']
-  ips node['faraday']['cscan']['ips']
-  websites node['faraday']['cscan']['websites']
+def initialize(*args)
+  super
+  @action = :create
+  @resource_name = :faraday_cscan
 end

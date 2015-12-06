@@ -20,6 +20,8 @@ default['faraday']['cscan']['git_repository'] = 'https://github.com/infobyte/csc
 default['faraday']['cscan']['git_reference'] = 'master'
 default['faraday']['cscan']['pip_packages'] = %w(python-owasp-zap-v2 w3af-api-client)
 
+default['faraday']['cscan']['ips'] = ['127.0.0.1']
+default['faraday']['cscan']['websites'] = ['http://127.0.0.1:80']
 default['faraday']['cscan']['config'] = {
   nmap: 'nmap',
   openvas: {
