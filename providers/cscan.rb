@@ -17,34 +17,50 @@
 #
 
 action :install do
-  git "#{node['faraday']['install_dir']}/scripts/cscan-#{new_resource.name}" do
-    repository node['faraday']['cscan']['git_repository']
-    reference node['faraday']['cscan']['git_reference']
+  name = (new_resource.name == 'default' ? 'cscan' : "cscan-#{new_resource.name}")
+  git "#{new_resource.path}/#{name}" do
+    repository new_resource.git_repository
+    reference new_resource.git_reference
   end
 
   new_resource.updated_by_last_action(true)
 end
 
 action :configure do
-  cscan_dir = "cscan-#{new_resource.name}"
-  cscan_dir = 'cscan' if new_resource.name == 'default'
+  name = (new_resource.name == 'default' ? 'cscan' : "cscan-#{new_resource.name}")
 
-  template "#{node['faraday']['install_dir']}/scripts/#{cscan_dir}/config.py" do
+  template "#{new_resource.path}/#{name}/config.py" do
     source 'cscan/config.py.erb'
     variables config: new_resource.config
     cookbook new_resource.cookbook
   end
 
-  template "#{node['faraday']['install_dir']}/scripts/#{cscan_dir}/ips.txt" do
+  template "#{new_resource.path}/#{name}/ips.txt" do
     source 'cscan/targets.erb'
     variables targets: new_resource.ips
     cookbook new_resource.cookbook
   end
 
-  template "#{node['faraday']['install_dir']}/scripts/#{cscan_dir}/websites.txt" do
+  template "#{new_resource.path}/#{name}/websites.txt" do
     source 'cscan/targets.erb'
     variables targets: new_resource.websites
     cookbook new_resource.cookbook
+  end
+
+  unless new_resource.crond.empty?
+    include_recipe 'cron'
+    crond = new_resource.crond
+    cron_d name do
+      action :create
+      hour crond[:hour] || '1'
+      minute crond[:minute] || '*'
+      weekday crond[:weekday] || '*'
+      day crond[:day] || '*'
+      month crond[:month] || '*'
+      mailto crond[:mailto] if crond[:mailto]
+      command crond[:command] || './cscan.py'
+      path "#{new_resource.path}/#{new_resource.name}"
+    end
   end
 
   new_resource.updated_by_last_action(true)

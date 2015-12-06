@@ -6,6 +6,10 @@ https://www.faradaysec.com
 
 Requirements
 ------------
+#### Cookbooks
+- `poise-python` - https://supermarket.chef.io/cookbooks/poise-python
+- `cron` - https://supermarket.chef.io/cookbooks/cron
+
 #### Services
 - `couchdb`
 
@@ -46,38 +50,12 @@ Use the `['faraday']['config_attrs']` namespace to set xml attributes. See `attr
 | `[faraday][service]` |  Hash  | Hash of variables to override for service init script |
 
 #### faraday::cscan
-<table>
-<tr>
-<th>Key</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
-</tr>
-<tr>
-<td><tt>['faraday']['cscan']['git_repository']</tt></td>
-<td>String</td>
-<td>cscan repository.</td>
-<td><tt>https://github.com/infobyte/cscan</tt></td>
-</tr>
-<tr>
-<td><tt>['faraday']['cscan']['git_reference']</tt></td>
-<td>String</td>
-<td>Reference of the repository to sync.</td>
-<td><tt>master</tt></td>
-</tr>
-<tr>
-<td><tt>['faraday']['cscan']['pip_packages']</tt></td>
-<td>Array</td>
-<td>Python package to install</td>
-<td><tt>[python-owasp-zap-v2, w3af-api-client]</tt></td>
-</tr>
-<tr>
-<td><tt>['faraday']['cscan']['config']</tt></td>
-<td>Hash</td>
-<td>Configure cscan with some values, this set CSCAN_DIR/config.py</td>
-<td><tt>See atrribute file.</tt></td>
-</tr>
-</table>
+|  Key                             |  Type  |  Description                                          |
+| -------------------------------- | ------ | ----------------------------------------------------- |
+| `[faraday][cscan][pip_packages]` | Array  | Python packages to install                            |
+| `[faraday][cscan][config]`       | Hash   | Configuration for default cscan                       |
+| `[faraday][cscan][ips]`          | Array  | List of IPs for default cscan                         |
+| `[faraday][cscan][websites]`     | Array  | List of websites for default cscan                    |
 
 Usage
 -----
@@ -114,7 +92,7 @@ Include `faraday::config` in your node's `run_list` to configure faraday for a u
 ```
 
 #### faraday::service
-Include `faraday::service` in your node's `run_list` to configure faraday as a server:
+Include `faraday::service` in your node's `run_list` to configure faraday as a server (*Experimental*):
 
 ```json
 {
@@ -134,7 +112,7 @@ Include `faraday::service` in your node's `run_list` to configure faraday as a s
 ```
 
 #### faraday::cscan
-Include `faraday::cscan` in your node's `run_list` to install continuous scanning:
+Include `faraday::cscan` in your node's `run_list` to configure default continuous scanning:
 
 ```json
 {
@@ -147,14 +125,56 @@ Include `faraday::cscan` in your node's `run_list` to install continuous scannin
       "cscan": {
         "config": {
           ... configuration here ...
-        }
+        },
+        "ips": ["192.168.0.1"],
+        "websites": ["http://192.168.0.1"],
       }
     }
   }
 }
 ```
 
-#### Tests
+#### Custom resources
+
+##### faraday_config
+This LWRP can be used to deploy many faraday configuration.
+
+###### Actions
+|  Action   |  Description                             |
+| --------- | ---------------------------------------- |
+| `:create` | Create configuration for a specific user |
+
+###### Attributes
+|  Attribute     |  Type  |  Description                                                    |
+| -------------- | ------ | --------------------------------------------------------------- |
+| `path`         | String | Configuration path, this is the name attribute of this resource |
+| `user`         | String | User for files permission (default: root)                       |
+| `group`        | String | Group for files permission (default: root)                      |
+| `config`       | Hash   | Configuration to deploy (default: {})                           |
+| `config_attrs` | Hash   | Config attributes (default: {})                                 |
+
+##### faraday_cscan
+###### Actions
+|  Action       |  Description                                |
+| ----------    | ------------------------------------------- |
+| `:install`    | Install a new continuous scanning directory |
+| `:configure`  | Configure a continuous scanning install     |
+
+###### Attributes
+|  Attribute       |  Type  |  Description                                                                           |
+| ---------------- | ------ | -------------------------------------------------------------------------------------- |
+| `name`           | String | Continuous scanning name                                                               |
+| `path`           | String | Optional path where will be created cscan dir (default: `FARADAY_INSTALL_DIR/scripts`) |
+| `git_repository` | String | cscan repository (default: https://github.com/infobyte/cscan)                          |
+| `git_reference`  | String | cscan reference (default: master)                                                      |
+| `ips`            | Array  | List of IPs to configure (default: [])                                                 |
+| `websites`       | Array  | List of websites to configure (default: [])                                            |
+| `config`         | Hash   | Config attributes (default: `node['faraday']['cscan']['config']`)                      |
+| `cookbook`       | String | Optional cookbook name for templates (default: faraday)                                |
+| `crond`          | Hash   | Cron setup. These attributes will be used for `cron_d` resource (default: {})          |
+
+Tests
+-----
 
 - First, install dependencies:  
 `bundle install`

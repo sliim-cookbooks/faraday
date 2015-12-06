@@ -14,6 +14,7 @@ recipe 'faraday::config', 'Configure a Faraday server'
 recipe 'faraday::cscan', 'Install continuous scanning tool'
 
 depends 'poise-python'
+depends 'cron'
 
 supports 'debian', '> 7.0'
 
