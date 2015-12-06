@@ -57,6 +57,7 @@ action :configure do
       weekday crond[:weekday] || '*'
       day crond[:day] || '*'
       month crond[:month] || '*'
+      user crond[:user] || 'root'
       mailto crond[:mailto] if crond[:mailto]
       command crond[:command] || './cscan.py'
       path "#{new_resource.path}/#{dirname}"
