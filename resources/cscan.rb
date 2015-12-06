@@ -19,12 +19,18 @@
 actions :install, :configure
 
 attribute :name, kind_of: String
-attribute :path, kind_of: String, default: "#{node['faraday']['install_dir']}/scripts"
-attribute :git_repository, kind_of: String, default: 'https://github.com/infobyte/cscan'
+attribute :path,
+          kind_of: String,
+          default: "#{node['faraday']['install_dir']}/scripts"
+attribute :git_repository,
+          kind_of: String,
+          default: 'https://github.com/infobyte/cscan'
 attribute :git_reference, kind_of: String, default: 'master'
 attribute :ips, kind_of: Array, default: []
 attribute :websites, kind_of: Array, default: []
-attribute :config, kind_of: Hash, default: node['faraday']['cscan']['config']
+attribute :config,
+          kind_of: Hash,
+          default: node['faraday']['cscan']['config']
 attribute :cookbook, kind_of: String, default: 'faraday'
 attribute :crond, kind_of: Hash, default: {}
 

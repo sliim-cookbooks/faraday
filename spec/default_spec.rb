@@ -34,7 +34,8 @@ describe 'faraday::default' do
 
   # FIXME: ArgumentError when trying to expect pip requirements
   # it 'installs pip_requirements[/opt/faraday-dev/requirements.txt]' do
-  #   expect(subject).to install_pip_requirements('/opt/faraday-dev/requirements.txt')
+  #   expect(subject).to install_pip_requirements(
+  #                        '/opt/faraday-dev/requirements.txt')
   #     .with(python: '/usr/bin/python',
   #           virtualenv: 'faraday-venv')
   # end

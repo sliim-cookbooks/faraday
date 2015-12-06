@@ -18,5 +18,5 @@
 
 default['faraday']['service'] = {
   RUN: true,
-  DAEMON: "#{node['faraday']['install_dir']}/server",
+  DAEMON: "#{node['faraday']['install_dir']}/server"
 }

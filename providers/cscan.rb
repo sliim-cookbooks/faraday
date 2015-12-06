@@ -17,8 +17,7 @@
 #
 
 action :install do
-  name = (new_resource.name == 'default' ? 'cscan' : "cscan-#{new_resource.name}")
-  git "#{new_resource.path}/#{name}" do
+  git "#{new_resource.path}/cscan-#{new_resource.name}" do
     repository new_resource.git_repository
     reference new_resource.git_reference
   end
@@ -27,21 +26,22 @@ action :install do
 end
 
 action :configure do
-  name = (new_resource.name == 'default' ? 'cscan' : "cscan-#{new_resource.name}")
+  dirname = "cscan-#{new_resource.name}"
+  dirname = 'cscan' if new_resource.name == 'default'
 
-  template "#{new_resource.path}/#{name}/config.py" do
+  template "#{new_resource.path}/#{dirname}/config.py" do
     source 'cscan/config.py.erb'
     variables config: new_resource.config
     cookbook new_resource.cookbook
   end
 
-  template "#{new_resource.path}/#{name}/ips.txt" do
+  template "#{new_resource.path}/#{dirname}/ips.txt" do
     source 'cscan/targets.erb'
     variables targets: new_resource.ips
     cookbook new_resource.cookbook
   end
 
-  template "#{new_resource.path}/#{name}/websites.txt" do
+  template "#{new_resource.path}/#{dirname}/websites.txt" do
     source 'cscan/targets.erb'
     variables targets: new_resource.websites
     cookbook new_resource.cookbook
@@ -50,7 +50,7 @@ action :configure do
   unless new_resource.crond.empty?
     include_recipe 'cron'
     crond = new_resource.crond
-    cron_d name do
+    cron_d dirname do
       action :create
       hour crond[:hour] || '1'
       minute crond[:minute] || '*'
@@ -59,7 +59,7 @@ action :configure do
       month crond[:month] || '*'
       mailto crond[:mailto] if crond[:mailto]
       command crond[:command] || './cscan.py'
-      path "#{new_resource.path}/#{new_resource.name}"
+      path "#{new_resource.path}/#{dirname}"
     end
   end
 
