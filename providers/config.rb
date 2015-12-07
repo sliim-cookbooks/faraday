@@ -17,7 +17,6 @@
 #
 
 action :create do
-
   config = Chef::Mixin::DeepMerge.merge(node['faraday']['config'],
                                         new_resource.config)
   attrs = Chef::Mixin::DeepMerge.merge(node['faraday']['config_attrs'],
