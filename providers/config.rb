@@ -17,6 +17,12 @@
 #
 
 action :create do
+
+  config = Chef::Mixin::DeepMerge.merge(node['faraday']['config'],
+                                        new_resource.config)
+  attrs = Chef::Mixin::DeepMerge.merge(node['faraday']['config_attrs'],
+                                       new_resource.config_attrs)
+
   directory new_resource.path do
     owner new_resource.user
     group new_resource.group
@@ -27,8 +33,8 @@ action :create do
     owner new_resource.user
     group new_resource.group
     source 'config.xml.erb'
-    variables config: new_resource.config,
-              attrs: new_resource.config_attrs
+    variables config: config,
+              attrs: attrs
   end
 
   new_resource.updated_by_last_action(true)

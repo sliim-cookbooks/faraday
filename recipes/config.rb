@@ -19,6 +19,4 @@
 faraday_config "#{node['faraday']['home']}/.faraday/config" do
   user node['faraday']['user']
   group node['faraday']['group']
-  config node['faraday']['config']
-  config_attrs node['faraday']['config_attrs']
 end
