@@ -1,7 +1,7 @@
 faraday Cookbook
 ================
-Installs and configure Faraday - A collaborative penetration testing tool -
-https://www.faradaysec.com
+Installs and configures [Faraday](https://www.faradaysec.com) - A collaborative penetration testing tool!
+
 [![Cookbook Version](https://img.shields.io/cookbook/v/faraday.svg)](https://community.opscode.com/cookbooks/faraday) [![Build Status](https://travis-ci.org/sliim-cookbooks/faraday.svg?branch=master)](https://travis-ci.org/sliim-cookbooks/faraday) 
 
 Requirements
@@ -22,13 +22,13 @@ Attributes
 ----------
 #### faraday::default
 
-|  Key                        |  Type   |  Description                                                        |
-| --------------------------- | ------- | ------------------------------------------------------------------- |
-| `[faraday][packages]`       | Array   | Package list to install (default: [git-core, libpq-dev])            |
-| `[faraday][git_repository]` | String  | Faraday repository (default: https://github.com/infobyte/faraday)   |
-| `[faraday][git_reference]`  | String  | Faraday reference or version (default: master)                      |
-| `[faraday][install_dir]`    | String  | Faraday install directory (default: /opt/faraday)                   |
-| `[faraday][python_runtime]` | String  | Python runtime to use, use for `poise-python` cookbook (default: 2) |
+|  Key                        |  Type   |  Description                                                         |
+| --------------------------- | ------- | -------------------------------------------------------------------- |
+| `[faraday][packages]`       | Array   | Package list to install (default: [git-core, libpq-dev])             |
+| `[faraday][git_repository]` | String  | Faraday repository (default: https://github.com/infobyte/faraday)    |
+| `[faraday][git_reference]`  | String  | Faraday reference or version (default: master)                       |
+| `[faraday][install_dir]`    | String  | Faraday install directory (default: /opt/faraday)                    |
+| `[faraday][python_runtime]` | String  | Python runtime to use, used for `poise-python` cookbook (default: 2) |
 
 #### faraday::config
 
@@ -50,12 +50,12 @@ Use the `['faraday']['config_attrs']` namespace to set xml attributes. See `attr
 | `[faraday][service]` |  Hash  | Hash of variables to override for service init script |
 
 #### faraday::cscan
-|  Key                             |  Type  |  Description                                          |
-| -------------------------------- | ------ | ----------------------------------------------------- |
-| `[faraday][cscan][pip_packages]` | Array  | Python packages to install                            |
-| `[faraday][cscan][config]`       | Hash   | Configuration for default cscan                       |
-| `[faraday][cscan][ips]`          | Array  | List of IPs for default cscan                         |
-| `[faraday][cscan][websites]`     | Array  | List of websites for default cscan                    |
+|  Key                             |  Type  |  Description                                                                |
+| -------------------------------- | ------ | --------------------------------------------------------------------------- |
+| `[faraday][cscan][pip_packages]` | Array  | Python packages to install (default: [python-owasp-zap-v2 w3af-api-client]) |
+| `[faraday][cscan][config]`       | Hash   | Configuration for default cscan (default: default faraday config)           |
+| `[faraday][cscan][ips]`          | Array  | List of IPs for default cscan (default: [127.0.0.1])                        |
+| `[faraday][cscan][websites]`     | Array  | List of websites for default cscan (default: [http://127.0.0.1:80])         |
 
 Usage
 -----
@@ -127,7 +127,7 @@ Include `faraday::cscan` in your node's `run_list` to configure default continuo
           ... configuration here ...
         },
         "ips": ["192.168.0.1"],
-        "websites": ["http://192.168.0.1"],
+        "websites": ["http://192.168.0.1"]
       }
     }
   }
@@ -153,7 +153,18 @@ This LWRP can be used to deploy many faraday configuration.
 | `config`       | Hash   | Configuration to deploy (default: {})                           |
 | `config_attrs` | Hash   | Config attributes (default: {})                                 |
 
+###### Example
+```
+faraday_config '/home/sliim/.faraday/config' do
+  user 'sliim'
+  group 'sliim'
+  config last_workspace: 'sliim-corp'
+end
+```
+
 ##### faraday_cscan
+Install and configure a continuous scanning directory.
+
 ###### Actions
 |  Action       |  Description                                |
 | ----------    | ------------------------------------------- |
@@ -172,6 +183,23 @@ This LWRP can be used to deploy many faraday configuration.
 | `config`         | Hash   | Config attributes (default: `node['faraday']['cscan']['config']`)                      |
 | `cookbook`       | String | Optional cookbook name for templates (default: faraday)                                |
 | `crond`          | Hash   | Cron setup. These attributes will be used for `cron_d` resource (default: {})          |
+
+###### Example
+```
+faraday_cscan 'local' do
+  action [:install, :configure]
+  ips ['10.0.1.2',
+       '10.0.1.3',
+       '10.0.1.4']
+  crond hour: 13,
+        minute: 37,
+        weekday: 5,
+        user: 'faraday',
+        mailto: 'you@gmail.com',
+        command: ./cscan.py -p nmap.sh >> cron.log 2>&1 && mv output/* /opt/faraday/.faraday/report/cscan-local
+
+end
+```
 
 Tests
 -----
