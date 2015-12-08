@@ -25,7 +25,7 @@ else
 end
 
 default['faraday']['config']['appname'] = 'Faraday - Penetration Test IDE'
-default['faraday']['config']['version'] = '1.0'
+default['faraday']['config']['version'] = '1.0.15'
 default['faraday']['config']['debug_status'] = 0
 default['faraday']['config']['font'] = '-Misc-Fixed-medium-r-normal-*-12-100-100-100-c-70-iso8859-1'
 default['faraday']['config']['home_path'] = '~/'
