@@ -22,21 +22,21 @@ Attributes
 ----------
 #### faraday::default
 
-|  Key                        |  Type   |  Description                                                         |
-| --------------------------- | ------- | -------------------------------------------------------------------- |
-| `[faraday][packages]`       | Array   | Package list to install (default: [git-core, libpq-dev])             |
-| `[faraday][git_repository]` | String  | Faraday repository (default: https://github.com/infobyte/faraday)    |
-| `[faraday][git_reference]`  | String  | Faraday reference or version (default: master)                       |
-| `[faraday][install_dir]`    | String  | Faraday install directory (default: /opt/faraday)                    |
-| `[faraday][python_runtime]` | String  | Python runtime to use, used for `poise-python` cookbook (default: 2) |
+|  Key                        |  Type   |  Description                                                           |
+| --------------------------- | ------- | ---------------------------------------------------------------------- |
+| `[faraday][packages]`       | Array   | Package list to install (default: `[git-core, libpq-dev]`)             |
+| `[faraday][git_repository]` | String  | Faraday repository (default: `https://github.com/infobyte/faraday`)    |
+| `[faraday][git_reference]`  | String  | Faraday reference or version (default: `master`)                       |
+| `[faraday][install_dir]`    | String  | Faraday install directory (default: `/opt/faraday`)                    |
+| `[faraday][python_runtime]` | String  | Python runtime to use, used for `poise-python` cookbook (default: `2`) |
 
 #### faraday::config
 
-|  Key               |  Type  |  Description                                           |
-| ------------------ | ------ | ------------------------------------------------------ |
-| `[faraday][user]`  | String | User to set configuration, must exists (default: root) |
-| `[faraday][group]` | String | Group for file permission, must exists (default: root) |
-| `[faraday][home]`  | String | User's home directory (default: /root)                 |
+|  Key               |  Type  |  Description                                             |
+| ------------------ | ------ | -------------------------------------------------------- |
+| `[faraday][user]`  | String | User to configure, must exists (default: `root`)         |
+| `[faraday][group]` | String | Group for file permission, must exists (default: `root`) |
+| `[faraday][home]`  | String | User's home directory (default: `/root`)                 |
 
 All others attributes in `['faraday']['config']` namespace will generate dynamically the
 configuration file as XML format in `$HOME/.faraday/config/config.xml`.
@@ -50,12 +50,12 @@ Use the `['faraday']['config_attrs']` namespace to set xml attributes. See `attr
 | `[faraday][service]` |  Hash  | Hash of variables to override for service init script |
 
 #### faraday::cscan
-|  Key                             |  Type  |  Description                                                                |
-| -------------------------------- | ------ | --------------------------------------------------------------------------- |
-| `[faraday][cscan][pip_packages]` | Array  | Python packages to install (default: [python-owasp-zap-v2 w3af-api-client]) |
-| `[faraday][cscan][config]`       | Hash   | Configuration for default cscan (default: default faraday config)           |
-| `[faraday][cscan][ips]`          | Array  | List of IPs for default cscan (default: [127.0.0.1])                        |
-| `[faraday][cscan][websites]`     | Array  | List of websites for default cscan (default: [http://127.0.0.1:80])         |
+|  Key                             |  Type  |  Description                                                                  |
+| -------------------------------- | ------ | ----------------------------------------------------------------------------- |
+| `[faraday][cscan][pip_packages]` | Array  | Python packages to install (default: `[python-owasp-zap-v2 w3af-api-client]`) |
+| `[faraday][cscan][config]`       | Hash   | Configuration for default cscan (default: `node[faraday][config]`)            |
+| `[faraday][cscan][ips]`          | Array  | List of IPs for default cscan (default: `[127.0.0.1]`)                        |
+| `[faraday][cscan][websites]`     | Array  | List of websites for default cscan (default: `[http://127.0.0.1:80]`)         |
 
 Usage
 -----
@@ -67,7 +67,13 @@ Include `faraday` in your node's `run_list` to install faraday and its requireme
   "name":"my_node",
   "run_list": [
     "recipe[faraday]"
-  ]
+  ],
+  "attributes": {
+    "faraday": {
+      "git_reference": "v1.0.15",
+      "install_dir": "/opt/faraday-1.0.15"
+    }
+  }
 }
 ```
 
@@ -84,7 +90,8 @@ Include `faraday::config` in your node's `run_list` to configure faraday for a u
     "faraday": {
       "user": "my_user",
       "config": {
-        ... configuration here ...
+        "couch_uri": "http://127.0.0.1:5984",
+        "last_workspace": "my_workspace"
       }
     }
   }
@@ -124,7 +131,8 @@ Include `faraday::cscan` in your node's `run_list` to configure default continuo
     "faraday": {
       "cscan": {
         "config": {
-          ... configuration here ...
+          "couch_uri": "https://couchdb-host:6984",
+          "last_workspace": "cscan_workspace"
         },
         "ips": ["192.168.0.1"],
         "websites": ["http://192.168.0.1"]
@@ -148,13 +156,13 @@ This LWRP can be used to deploy many faraday configuration.
 |  Attribute     |  Type  |  Description                                                    |
 | -------------- | ------ | --------------------------------------------------------------- |
 | `path`         | String | Configuration path, this is the name attribute of this resource |
-| `user`         | String | User for files permission (default: root)                       |
-| `group`        | String | Group for files permission (default: root)                      |
-| `config`       | Hash   | Configuration to deploy (default: {})                           |
-| `config_attrs` | Hash   | Config attributes (default: {})                                 |
+| `user`         | String | User for files permission (default: `root`)                     |
+| `group`        | String | Group for files permission (default: `root`)                    |
+| `config`       | Hash   | Configuration to deploy (default: `{}`)                         |
+| `config_attrs` | Hash   | Config attributes (default: `{}`)                               |
 
 ###### Example
-```
+```ruby
 faraday_config '/home/sliim/.faraday/config' do
   user 'sliim'
   group 'sliim'
@@ -174,18 +182,18 @@ Install and configure a continuous scanning directory.
 ###### Attributes
 |  Attribute       |  Type  |  Description                                                                           |
 | ---------------- | ------ | -------------------------------------------------------------------------------------- |
-| `name`           | String | Continuous scanning name                                                               |
+| `name`           | String | Continuous scanning name (final dirname will be prepended with `cscan-`)               |
 | `path`           | String | Optional path where will be created cscan dir (default: `FARADAY_INSTALL_DIR/scripts`) |
-| `git_repository` | String | cscan repository (default: https://github.com/infobyte/cscan)                          |
-| `git_reference`  | String | cscan reference (default: master)                                                      |
-| `ips`            | Array  | List of IPs to configure (default: [])                                                 |
-| `websites`       | Array  | List of websites to configure (default: [])                                            |
-| `config`         | Hash   | Config attributes (default: `node['faraday']['cscan']['config']`)                      |
-| `cookbook`       | String | Optional cookbook name for templates (default: faraday)                                |
-| `crond`          | Hash   | Cron setup. These attributes will be used for `cron_d` resource (default: {})          |
+| `git_repository` | String | cscan repository (default: `https://github.com/infobyte/cscan`)                        |
+| `git_reference`  | String | cscan reference (default: `master`)                                                    |
+| `ips`            | Array  | List of IPs to configure (default: `[]`)                                               |
+| `websites`       | Array  | List of websites to configure (default: `[]`)                                          |
+| `config`         | Hash   | Config attributes (default: `node[faraday][cscan][config]`)                            |
+| `cookbook`       | String | Optional cookbook name for templates (default: `faraday`)                              |
+| `crond`          | Hash   | Cron setup. These attributes will be used for `cron_d` resource (default: `{}`)        |
 
 ###### Example
-```
+```ruby
 faraday_cscan 'local' do
   action [:install, :configure]
   ips ['10.0.1.2',
