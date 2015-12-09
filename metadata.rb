@@ -10,7 +10,7 @@ version '0.2.1'
 
 recipe 'faraday::default', 'Faraday install with python venv'
 recipe 'faraday::config', 'Configure Faraday for a specific user'
-recipe 'faraday::config', 'Configure a Faraday server'
+recipe 'faraday::service', 'Configure a Faraday server'
 recipe 'faraday::cscan', 'Install continuous scanning tool'
 
 depends 'poise-python'
