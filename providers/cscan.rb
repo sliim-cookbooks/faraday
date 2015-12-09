@@ -16,6 +16,10 @@
 # limitations under the License.
 #
 
+def whyrun_supported?
+  true
+end
+
 action :install do
   git "#{new_resource.path}/cscan-#{new_resource.name}" do
     repository new_resource.git_repository

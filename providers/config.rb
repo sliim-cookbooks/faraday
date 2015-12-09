@@ -16,6 +16,10 @@
 # limitations under the License.
 #
 
+def whyrun_supported?
+  true
+end
+
 action :create do
   config = Chef::Mixin::DeepMerge.merge(node['faraday']['config'],
                                         new_resource.config)
