@@ -15,9 +15,8 @@ user 'faraday' do
   system true
 end
 
-faraday_config "#{node['faraday']['install_dir']}/.faraday/config" do
-  user 'faraday'
-  group 'root'
+faraday_config 'faraday' do
+  home node['faraday']['install_dir']
 end
 
 template "#{node['faraday']['install_dir']}/server" do

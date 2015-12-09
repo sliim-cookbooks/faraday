@@ -32,11 +32,10 @@ Attributes
 
 #### faraday::config
 
-|  Key               |  Type  |  Description                                             |
-| ------------------ | ------ | -------------------------------------------------------- |
-| `[faraday][user]`  | String | User to configure, must exists (default: `root`)         |
-| `[faraday][group]` | String | Group for file permission, must exists (default: `root`) |
-| `[faraday][home]`  | String | User's home directory (default: `/root`)                 |
+|  Key               |  Type  |  Description                                     |
+| ------------------ | ------ | ------------------------------------------------ |
+| `[faraday][user]`  | String | User to configure, must exists (default: `root`) |
+| `[faraday][home]`  | String | User's home directory (default: `/root`)         |
 
 All others attributes in `['faraday']['config']` namespace will generate dynamically the
 configuration file as XML format in `$HOME/.faraday/config/config.xml`.
@@ -151,22 +150,27 @@ This LWRP can be used to deploy many faraday configuration.
 |  Action   |  Description                             |
 | --------- | ---------------------------------------- |
 | `:create` | Create configuration for a specific user |
+| `:delete` | Delete user's configuration file         |
 
 ###### Attributes
-|  Attribute     |  Type  |  Description                                                    |
-| -------------- | ------ | --------------------------------------------------------------- |
-| `path`         | String | Configuration path, this is the name attribute of this resource |
-| `user`         | String | User for files permission (default: `root`)                     |
-| `group`        | String | Group for files permission (default: `root`)                    |
-| `config`       | Hash   | Configuration to deploy (default: `{}`)                         |
-| `config_attrs` | Hash   | Config attributes (default: `{}`)                               |
+|  Attribute     |  Type  |  Description                                                                          |
+| -------------- | ------ | ------------------------------------------------------------------------------------- |
+| `owner`        | String | Owner config file, this is the name attribute of this resource                        |
+| `home`         | String | Home directory, if nil: provider will determine it depending of owner (default: `nil` |
+| `file`         | String | Configuration file name (default: `config.xml`)                                       |
+| `cookbook`     | String | Optional cookbook name for template resource (default: `faraday`)                     |
+| `config`       | Hash   | Configuration to deploy (default: `{}`)                                               |
+| `config_attrs` | Hash   | Config attributes (default: `{}`)                                                     |
 
 ###### Example
 ```ruby
-faraday_config '/home/sliim/.faraday/config' do
-  user 'sliim'
-  group 'sliim'
+faraday_config 'sliim' do
   config last_workspace: 'sliim-corp'
+  end
+
+faraday_config 'sliim' do
+  action :delete
+  file 'user.xml'
 end
 ```
 

@@ -22,9 +22,8 @@ describe 'faraday::service' do
   end
 
   it 'creates faraday_config[/opt/faraday-dev/.faraday/config]' do
-    expect(subject).to create_faraday_config('/opt/faraday-dev/.faraday/config')
-      .with(user: 'faraday',
-            group: 'root')
+    expect(subject).to create_faraday_config('faraday')
+      .with(home: '/opt/faraday-dev')
   end
 
   it 'creates template[/opt/faraday-dev/server]' do

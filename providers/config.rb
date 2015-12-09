@@ -22,18 +22,33 @@ action :create do
   attrs = Chef::Mixin::DeepMerge.merge(node['faraday']['config_attrs'],
                                        new_resource.config_attrs)
 
-  directory new_resource.path do
-    owner new_resource.user
-    group new_resource.group
+  user = new_resource.owner
+  home = new_resource.home || (user == 'root' ? '/root' : "/home/#{user}")
+
+  directory "#{home}/.faraday/config" do
+    owner user
+    group user
     recursive true
   end
 
-  template "#{new_resource.path}/config.xml" do
-    owner new_resource.user
-    group new_resource.group
+  template "#{home}/.faraday/config/#{new_resource.file}" do
+    owner user
+    group user
     source 'config.xml.erb'
+    cookbook new_resource.cookbook
     variables config: config,
               attrs: attrs
+  end
+
+  new_resource.updated_by_last_action(true)
+end
+
+action :delete do
+  user = new_resource.owner
+  home = new_resource.home || (user == 'root' ? '/root' : "/home/#{user}")
+
+  file "#{home}/.faraday/config/#{new_resource.file}" do
+    action :delete
   end
 
   new_resource.updated_by_last_action(true)

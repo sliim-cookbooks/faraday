@@ -7,7 +7,6 @@ describe 'faraday::config' do
   let(:subject) do
     ChefSpec::SoloRunner.new(step_into: ['faraday_config']) do |node|
       node.set['faraday']['user'] = 'faradev'
-      node.set['faraday']['group'] = 'faradev'
       node.set['faraday']['home'] = '/home/faraday'
       node.set['faraday']['config']['appname'] = 'Faraday - PTI'
       node.set['faraday']['config']['version'] = '13.37'
@@ -16,9 +15,8 @@ describe 'faraday::config' do
   end
 
   it 'creates faraday_config[/home/faraday/.faraday/config]' do
-    expect(subject).to create_faraday_config('/home/faraday/.faraday/config')
-      .with(user: 'faradev',
-            group: 'faradev')
+    expect(subject).to create_faraday_config('faradev')
+      .with(home: '/home/faraday')
   end
 
   it 'creates directory[/home/faraday/.faraday/config]' do

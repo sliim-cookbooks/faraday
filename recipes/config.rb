@@ -16,7 +16,6 @@
 # limitations under the License.
 #
 
-faraday_config "#{node['faraday']['home']}/.faraday/config" do
-  user node['faraday']['user']
-  group node['faraday']['group']
+faraday_config node['faraday']['user'] do
+  home node['faraday']['home']
 end

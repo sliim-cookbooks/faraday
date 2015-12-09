@@ -14,3 +14,4 @@ AllCops:
 LineLength:
   Exclude:
     - attributes/**/*
+    - test/**/*

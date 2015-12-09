@@ -27,7 +27,7 @@ suites:
     run_list:
       - recipe[faraday]
       - recipe[faraday::config]
-      - recipe[faraday::cscan]
+      - recipe[faraday-lwrp::config]
     attributes:
       faraday:
         install_dir: /opt/faraday-test
@@ -45,7 +45,7 @@ suites:
     run_list:
       - recipe[faraday]
       - recipe[faraday::cscan]
-      - recipe[cscan-lwrp]
+      - recipe[faraday-lwrp::cscan]
     attributes:
       faraday:
         install_dir: /opt/faraday-test
