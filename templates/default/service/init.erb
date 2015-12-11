@@ -9,13 +9,15 @@
 # Description:       Starts and daemonize Faraday server
 ### END INIT INFO
 
-PATH=/sbin:/usr/sbin:/bin:/usr/bin
 DESC="Faraday server"
-NAME=faraday
-USER=$NAME
-DAEMON="/opt/$NAME/server"
+NAME=faraday-server
+USER=faraday
+INSTALL_DIR=/opt/faraday
+DAEMON="$INSTALL_DIR/.venv/bin/python"
 PIDFILE="/run/$NAME/$NAME.pid"
-DAEMON_ARGS="--gui=no-gui"
+LOGFILE="/var/log/$NAME/$NAME.log"
+DAEMON_ARGS="faraday.py --gui=no-gui"
+PATH=/sbin:/usr/sbin:/bin:/usr/bin:$INSTALL_DIR/.venv/bin
 
 [ -r /etc/default/$NAME ] && . /etc/default/$NAME
 
@@ -30,11 +32,14 @@ DAEMON_ARGS="--gui=no-gui"
 . /lib/lsb/init-functions
 <% end -%>
 
-if [ ! -d "$(dirname $PIDFILE)" ]; then
-    mkdir -p "$(dirname $PIDFILE)"
-    chown $USER:$USER "$(dirname $PIDFILE)"
-    chmod 755 "$(dirname $PIDFILE)"
-fi
+# Create directories if missing
+for DIRECTORIES in $PIDFILE $LOGFILE; do
+    if [ ! -d "$(dirname $DIRECTORIES)" ]; then
+        mkdir -p "$(dirname $DIRECTORIES)"
+        chown $USER:$USER "$(dirname $DIRECTORIES)"
+        chmod 755 "$(dirname $DIRECTORIES)"
+    fi
+done
 
 do_start()
 {
@@ -55,7 +60,7 @@ do_start()
         exit 0
     fi
 
-    start-stop-daemon --start --chuid $USER --pidfile=$PIDFILE --quiet -m -b --exec $DAEMON -- $DAEMON_ARGS || return 2
+    start-stop-daemon --start --chuid $USER --pidfile=$PIDFILE -b --no-close -m -d $INSTALL_DIR --exec $DAEMON -- $DAEMON_ARGS >> $LOGFILE 2>&1 || return 2
     [ -e "$PIDFILE" ] && chown $USER $PIDFILE
     return 0
 }
@@ -68,7 +73,7 @@ do_stop()
         log_warning_msg "PID file not found"
         return 4
     fi
-    start-stop-daemon --stop --oknodo --chuid $USER --pidfile=$PID --user=$USER --pidfile="$PIDFILE" --retry=30 || return 1
+    start-stop-daemon --stop --oknodo -x $DAEMON --retry=30 || return 1
     /bin/rm -f $PIDFILE
     return 0
 }

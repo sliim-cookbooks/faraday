@@ -7,7 +7,9 @@ describe 'faraday::service' do
     ChefSpec::SoloRunner.new do |node|
       node.set['faraday']['install_dir'] = '/opt/faraday-dev'
       node.set['faraday']['service']['RUN'] = true
-      node.set['faraday']['service']['DAEMON_ARGS'] = '--gui=no-gui -p 1337'
+      node.set['faraday']['service']['NAME'] = 'faraday-test'
+      node.set['faraday']['service']['DAEMON_ARGS'] =
+        'faraday.py --gui=no-gui -p 1337'
     end.converge(described_recipe)
   end
 
@@ -21,32 +23,27 @@ describe 'faraday::service' do
             system: true)
   end
 
-  it 'creates faraday_config[/opt/faraday-dev/.faraday/config]' do
+  it 'creates faraday_config[faraday]' do
     expect(subject).to create_faraday_config('faraday')
-      .with(home: '/opt/faraday-dev')
+      .with(home: '/opt/faraday-dev', file: 'config.xml')
   end
 
-  it 'creates template[/opt/faraday-dev/server]' do
-    expect(subject).to create_template('/opt/faraday-dev/server')
-      .with(source: 'service/server.erb',
-            owner: 'root',
-            group: 'root',
-            mode: '0755')
-  end
-
-  it 'creates template[/etc/default/faraday]' do
-    expect(subject).to create_template('/etc/default/faraday')
+  it 'creates template[/etc/default/faraday-test]' do
+    expect(subject).to create_template('/etc/default/faraday-test')
       .with(source: 'service/default.erb',
             owner: 'root',
             group: 'root',
             mode: '0644')
-    [/^DAEMON_ARGS="--gui=no-gui -p 1337"$/, /^RUN="true"$/].each do |m|
-      expect(subject).to render_file('/etc/default/faraday').with_content(m)
+    [/^DAEMON_ARGS="faraday.py --gui=no-gui -p 1337"$/,
+     /^RUN="true"$/,
+     /^NAME="faraday-test"/].each do |m|
+      expect(subject).to render_file('/etc/default/faraday-test')
+        .with_content(m)
     end
   end
 
-  it 'creates template[/etc/init.d/faraday]' do
-    expect(subject).to create_template('/etc/init.d/faraday')
+  it 'creates template[/etc/init.d/faraday-test]' do
+    expect(subject).to create_template('/etc/init.d/faraday-test')
       .with(source: 'service/init.erb',
             owner: 'root',
             group: 'root',
@@ -57,11 +54,11 @@ describe 'faraday::service' do
     expect(subject).to run_execute('chown -R faraday /opt/faraday-dev')
   end
 
-  it 'enables service[faraday]' do
-    expect(subject).to enable_service('faraday')
+  it 'enables service[faraday-test]' do
+    expect(subject).to enable_service('faraday-test')
   end
 
-  it 'starts service[faraday]' do
-    expect(subject).to start_service('faraday')
+  it 'starts service[faraday-test]' do
+    expect(subject).to start_service('faraday-test')
   end
 end

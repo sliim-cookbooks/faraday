@@ -109,8 +109,19 @@ Include `faraday::service` in your node's `run_list` to configure faraday as a s
   ],
   "attributes": {
     "faraday": {
+      "git_reference": "v1.0.15",
+      "install_dir": "/opt/faraday",
+      "python_runtime": "2",
       "service": {
-        "DAEMON_ARGS": "--gui=no-gui --port 31337"
+        "RUN": "true",
+        "NAME": "faraday-server",
+        "USER": "faraday",
+        "INSTALL_DIR": "/opt/faraday",
+        "DAEMON_ARGS": "faraday.py --gui=no-gui --port 31337"
+      },
+      "config": {
+        "version": "1.0.15",
+        "couch_uri": "http://127.0.0.1:5984"
       }
     }
   }
