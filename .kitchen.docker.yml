@@ -40,7 +40,7 @@ suites:
       faraday:
         install_dir: /opt/faraday-test
         service:
-          DAEMON_ARGS: --gui=no-gui
+          RUN: true
   - name: faraday-cscan
     run_list:
       - recipe[faraday]

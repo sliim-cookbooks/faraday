@@ -17,5 +17,8 @@
 #
 
 default['faraday']['service'] = {
-  RUN: true
+  RUN: true,
+  NAME: 'faraday-server',
+  USER: 'faraday',
+  INSTALL_DIR: node['faraday']['install_dir']
 }
