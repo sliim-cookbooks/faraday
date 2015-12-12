@@ -55,8 +55,8 @@ describe 'faraday::service' do
             mode: '0755')
   end
 
-  it 'runs execute[chown -R faraday /opt/faraday-dev]' do
-    expect(subject).to run_execute('chown -R faraday /opt/faraday-dev')
+  it 'runs execute[chown -R faraday:faraday /opt/faraday-dev]' do
+    expect(subject).to run_execute('chown -R faraday:faraday /opt/faraday-dev')
   end
 
   it 'enables service[faraday-test]' do
