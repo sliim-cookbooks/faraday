@@ -23,6 +23,11 @@ describe 'faraday::service' do
             system: true)
   end
 
+  it 'creates group[faraday]' do
+    expect(subject).to create_group('faraday')
+      .with(members: ['faraday'])
+  end
+
   it 'creates faraday_config[faraday]' do
     expect(subject).to create_faraday_config('faraday')
       .with(home: '/opt/faraday-dev', file: 'config.xml')

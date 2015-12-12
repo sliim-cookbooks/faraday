@@ -10,6 +10,7 @@ end
 describe file '/opt/faraday-test' do
   it { should be_directory }
   it { should be_owned_by 'faraday' }
+  it { should be_grouped_into 'faraday' }
 end
 
 describe file '/opt/faraday-test/.faraday/config/config.xml' do

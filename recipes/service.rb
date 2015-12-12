@@ -15,6 +15,10 @@ user 'faraday' do
   system true
 end
 
+group 'faraday' do
+  members ['faraday']
+end
+
 faraday_config 'faraday' do
   home node['faraday']['install_dir']
   file 'config.xml'
@@ -50,4 +54,4 @@ execute 'systemctl-daemon-reload' do
              :immediately
 end
 
-execute "chown -R faraday #{node['faraday']['install_dir']}"
+execute "chown -R faraday:faraday #{node['faraday']['install_dir']}"
