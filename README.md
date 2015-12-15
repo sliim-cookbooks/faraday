@@ -164,14 +164,14 @@ This LWRP can be used to deploy many faraday configuration.
 | `:delete` | Delete user's configuration file         |
 
 ###### Attributes
-|  Attribute     |  Type  |  Description                                                                          |
-| -------------- | ------ | ------------------------------------------------------------------------------------- |
-| `owner`        | String | Owner config file, this is the name attribute of this resource                        |
-| `home`         | String | Home directory, if nil: provider will determine it depending of owner (default: `nil` |
-| `file`         | String | Configuration file name (default: `config.xml`)                                       |
-| `cookbook`     | String | Optional cookbook name for template resource (default: `faraday`)                     |
-| `config`       | Hash   | Configuration to deploy (default: `{}`)                                               |
-| `config_attrs` | Hash   | Config attributes (default: `{}`)                                                     |
+|  Attribute     |  Type  |  Description                                                                           |
+| -------------- | ------ | -------------------------------------------------------------------------------------- |
+| `owner`        | String | Owner config file, this is the name attribute of this resource                         |
+| `home`         | String | Home directory, if nil: provider will determine it depending of owner (default: `nil`) |
+| `file`         | String | Configuration file name (default: `config.xml`)                                        |
+| `cookbook`     | String | Optional cookbook name for template resource (default: `faraday`)                      |
+| `config`       | Hash   | Configuration to deploy (default: `{}`)                                                |
+| `config_attrs` | Hash   | Config attributes (default: `{}`)                                                      |
 
 ###### Example
 ```ruby
@@ -233,7 +233,11 @@ Tests
 - Run Checkstyle and ChefSpec:  
 `bundle exec rake`
 
-- Run Kitchen tests:  
+- Run Kitchen tests:
+`bundle exec rake kitchen`
+
+If you have Docker, you can use the kitchen driver which is faster:
+`export KITCHEN_YAML=.kitchen.docker.yml`  
 `bundle exec rake kitchen`  
 
 Contributing
