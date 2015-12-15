@@ -73,7 +73,7 @@ do_stop()
         log_warning_msg "PID file not found"
         return 4
     fi
-    start-stop-daemon --stop --oknodo -x $DAEMON --retry=30 || return 1
+    start-stop-daemon --stop --oknodo  --pidfile=$PIDFILE --retry=30 || return 1
     /bin/rm -f $PIDFILE
     return 0
 }
