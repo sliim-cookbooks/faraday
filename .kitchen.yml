@@ -23,8 +23,30 @@ suites:
     run_list:
       - recipe[faraday]
       - recipe[faraday::config]
-      - recipe[faraday::cscan]
+      - recipe[faraday-lwrp::config]
     attributes:
       faraday:
         install_dir: /opt/faraday-test
-        user: root
+        user: kitchen
+  - name: faraday-server
+    run_list:
+      - recipe[faraday]
+      - recipe[faraday::service]
+    attributes:
+      faraday:
+        install_dir: /opt/faraday-test
+        service:
+          RUN: true
+  - name: faraday-cscan
+    run_list:
+      - recipe[faraday]
+      - recipe[faraday::cscan]
+      - recipe[faraday-lwrp::cscan]
+    attributes:
+      faraday:
+        install_dir: /opt/faraday-test
+        cscan:
+          ips:
+            - 127.0.1.1
+          websites:
+            - https://localhost:443
