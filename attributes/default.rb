@@ -18,6 +18,6 @@
 
 default['faraday']['packages'] = ['git-core', 'libpq-dev']
 default['faraday']['git_repository'] = 'https://github.com/infobyte/faraday'
-default['faraday']['git_reference'] = 'master'
+default['faraday']['git_reference'] = 'v1.0.16'
 default['faraday']['install_dir'] = '/opt/faraday'
 default['faraday']['python_runtime'] = '2'
