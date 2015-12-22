@@ -3,6 +3,10 @@ faraday CHANGELOG
 
 This file is used to list changes made in each version of the faraday cookbook.
 
+1.0.1
+-----
+- Default faraday version: 1.0.16
+
 1.0.0
 -----
 - New recipe `faraday::service`
