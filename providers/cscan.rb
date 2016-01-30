@@ -54,7 +54,7 @@ action :configure do
   unless new_resource.crond.empty?
     include_recipe 'cron'
     crond = new_resource.crond
-    cron_d dirname do
+    cron_d "cscan_#{new_resource.name}" do
       action :create
       hour crond[:hour] || '1'
       minute crond[:minute] || '*'
@@ -63,8 +63,8 @@ action :configure do
       month crond[:month] || '*'
       user crond[:user] || 'root'
       mailto crond[:mailto] if crond[:mailto]
-      command crond[:command] || './cscan.py'
-      path "#{new_resource.path}/#{dirname}"
+      command crond[:command] || "cd #{new_resource.path}/#{dirname}; cscan.py"
+      path "/bin:/usr/bin:#{new_resource.path}/#{dirname}"
     end
   end
 
