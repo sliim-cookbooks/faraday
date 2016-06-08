@@ -8,7 +8,7 @@ describe 'faraday::default' do
     ChefSpec::SoloRunner.new do |node|
       node.set['faraday']['git_repository'] = 'git://remote/faraday.git'
       node.set['faraday']['git_reference'] = 'dev'
-      node.set['faraday']['install_dir'] = '/opt/faraday-dev'
+      node.set['faraday']['install_dir'] = '/opt/faradev'
     end.converge described_recipe
   end
 
@@ -16,8 +16,8 @@ describe 'faraday::default' do
     expect(subject).to install_package('git-core')
   end
 
-  it 'syncs git[/opt/faraday-dev]' do
-    expect(subject).to sync_git('/opt/faraday-dev')
+  it 'syncs git[/opt/faradev]' do
+    expect(subject).to sync_git('/opt/faradev')
       .with(repository: 'git://remote/faraday.git',
             reference: 'dev')
   end
@@ -28,14 +28,12 @@ describe 'faraday::default' do
 
   it 'creates python_virtualenv[faraday-venv]' do
     expect(subject).to create_python_virtualenv('faraday-venv')
-      .with(python: '/usr/bin/python',
-            path: '/opt/faraday-dev/.venv')
+      .with(path: '/opt/faradev/.venv')
   end
 
   # FIXME: ArgumentError when trying to expect pip requirements
-  # it 'installs pip_requirements[/opt/faraday-dev/requirements.txt]' do
-  #   expect(subject).to install_pip_requirements(
-  #                        '/opt/faraday-dev/requirements.txt')
+  # it 'installs pip_requirements[/opt/faradev/requirements.txt]' do
+  # expect(subject).to install_pip_requirements('/opt/faradev/requirements.txt')
   #     .with(python: '/usr/bin/python',
   #           virtualenv: 'faraday-venv')
   # end

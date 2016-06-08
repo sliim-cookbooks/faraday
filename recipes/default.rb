@@ -28,7 +28,6 @@ end
 python_runtime node['faraday']['python_runtime']
 
 python_virtualenv 'faraday-venv' do
-  python node['faraday']['python_runtime']
   path "#{node['faraday']['install_dir']}/.venv"
 end
 

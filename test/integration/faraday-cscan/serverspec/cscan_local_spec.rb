@@ -63,7 +63,7 @@ describe file '/tmp/cscan-local2/websites.txt' do
   its(:content) { should match(%r{https://192.168.14.42:443}) }
 end
 
-describe file '/etc/cron.d/cscan-local2' do
+describe file '/etc/cron.d/cscan_local2' do
   it { should be_file }
   it { should be_mode 644 }
   it { should be_owned_by 'root' }
