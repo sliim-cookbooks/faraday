@@ -26,7 +26,7 @@ Attributes
 | --------------------------- | ------- | ---------------------------------------------------------------------- |
 | `[faraday][packages]`       | Array   | Package list to install (default: `[git-core, libpq-dev]`)             |
 | `[faraday][git_repository]` | String  | Faraday repository (default: `https://github.com/infobyte/faraday`)    |
-| `[faraday][git_reference]`  | String  | Faraday reference or version (default: `v1.0.16`)                      |
+| `[faraday][git_reference]`  | String  | Faraday reference or version (default: `v1.0.20`)                      |
 | `[faraday][install_dir]`    | String  | Faraday install directory (default: `/opt/faraday`)                    |
 | `[faraday][python_runtime]` | String  | Python runtime to use, used for `poise-python` cookbook (default: `2`) |
 
@@ -69,8 +69,8 @@ Include `faraday` in your node's `run_list` to install faraday and its requireme
   ],
   "attributes": {
     "faraday": {
-      "git_reference": "v1.0.16",
-      "install_dir": "/opt/faraday-1.0.16"
+      "git_reference": "v1.0.20",
+      "install_dir": "/opt/faraday-1.0.20"
     }
   }
 }
@@ -109,7 +109,7 @@ Include `faraday::service` in your node's `run_list` to configure faraday as a s
   ],
   "attributes": {
     "faraday": {
-      "git_reference": "v1.0.16",
+      "git_reference": "v1.0.20",
       "install_dir": "/opt/faraday",
       "python_runtime": "2",
       "service": {
@@ -120,7 +120,7 @@ Include `faraday::service` in your node's `run_list` to configure faraday as a s
         "DAEMON_ARGS": "faraday.py --gui=no-gui --port 31337"
       },
       "config": {
-        "version": "1.0.16",
+        "version": "1.0.20",
         "couch_uri": "http://127.0.0.1:5984"
       }
     }
