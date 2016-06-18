@@ -30,6 +30,11 @@ Attributes
 | `[faraday][install_dir]`    | String  | Faraday install directory (default: `/opt/faraday`)                    |
 | `[faraday][python_runtime]` | String  | Python runtime to use, used for `poise-python` cookbook (default: `2`) |
 
+#### faraday::gtk
+|  Key                      |  Type  |  Description                                                                                                |
+| ------------------------- | ------ | ----------------------------------------------------------------------------------------------------------- |
+| `[faraday][gtk_packages]` | Array  | Python packages to install (default: `[gir1.2-gtk-3.0 gir1.2-vte-2.91 python-pip python-gobject zsh curl]`) |
+
 #### faraday::config
 
 |  Key               |  Type  |  Description                                     |
@@ -59,7 +64,7 @@ Use the `['faraday']['config_attrs']` namespace to set xml attributes. See `attr
 Usage
 -----
 #### faraday::default
-Include `faraday` in your node's `run_list` to install faraday and its requirements:
+Include `faraday` in your node's `run_list` to install faraday and its requirements from source:
 
 ```json
 {
@@ -73,6 +78,31 @@ Include `faraday` in your node's `run_list` to install faraday and its requireme
       "install_dir": "/opt/faraday-1.0.20"
     }
   }
+}
+```
+
+#### faraday::package
+Use `faraday::package` to only install `python-faraday` package:
+
+```json
+{
+  "name":"my_node",
+  "run_list": [
+    "recipe[faraday::package]"
+  ]
+}
+```
+
+#### faraday::gtk
+Use `faraday::gtk` to only install `gtk` dependencies:
+
+```json
+{
+  "name":"my_node",
+  "run_list": [
+    "recipe[faraday]",
+    "recipe[faraday::gtk]"
+  ]
 }
 ```
 

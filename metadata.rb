@@ -8,7 +8,9 @@ description 'Installs/Configures Faraday'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version '1.0.3'
 
-recipe 'faraday::default', 'Faraday install with python venv'
+recipe 'faraday::default', 'Install from sources with a virtualenv'
+recipe 'faraday::package', 'Install python-faraday package'
+recipe 'faraday::gtk', 'Install required packages for GTK GUI'
 recipe 'faraday::config', 'Configure Faraday for a specific user'
 recipe 'faraday::service', 'Configure a Faraday server'
 recipe 'faraday::cscan', 'Install continuous scanning tool'
