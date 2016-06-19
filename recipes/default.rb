@@ -19,19 +19,3 @@
 node['faraday']['packages'].each do |pkg|
   package pkg
 end
-
-git node['faraday']['install_dir'] do
-  repository node['faraday']['git_repository']
-  reference node['faraday']['git_reference']
-end
-
-python_runtime node['faraday']['python_runtime']
-
-python_virtualenv 'faraday-venv' do
-  path "#{node['faraday']['install_dir']}/.venv"
-end
-
-pip_requirements "#{node['faraday']['install_dir']}/requirements.txt" do
-  python node['faraday']['python_runtime']
-  virtualenv 'faraday-venv'
-end

@@ -12,6 +12,10 @@ describe 'faraday::cscan' do
     end.converge described_recipe
   end
 
+  it 'includes recipe[faraday::sources]' do
+    expect(subject).to include_recipe('faraday::sources')
+  end
+
   # FIXME: ArgumentError when trying to expect pip packages
   # %w(python-owasp-zap-v2 w3af-api-client).each do |pkg|
   #   it "installs python_package[#{pkg}]" do

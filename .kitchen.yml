@@ -22,6 +22,7 @@ suites:
   - name: faraday
     run_list:
       - recipe[faraday]
+      - recipe[faraday::sources]
       - recipe[faraday::config]
       - recipe[faraday-lwrp::config]
     attributes:
@@ -31,6 +32,7 @@ suites:
   - name: faraday-server
     run_list:
       - recipe[faraday]
+      - recipe[faraday::sources]
       - recipe[faraday::service]
     attributes:
       faraday:
@@ -40,6 +42,7 @@ suites:
   - name: faraday-cscan
     run_list:
       - recipe[faraday]
+      - recipe[faraday::sources]
       - recipe[faraday::cscan]
       - recipe[faraday-lwrp::cscan]
     attributes:

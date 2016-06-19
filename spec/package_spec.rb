@@ -8,6 +8,10 @@ describe 'faraday::package' do
     ChefSpec::SoloRunner.new.converge described_recipe
   end
 
+  it 'includes recipe[faraday]' do
+    expect(subject).to include_recipe('faraday')
+  end
+
   it 'upgrades package[python-faraday]' do
     expect(subject).to upgrade_package('python-faraday')
   end

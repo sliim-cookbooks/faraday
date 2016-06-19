@@ -13,10 +13,6 @@ describe 'faraday::service' do
     end.converge(described_recipe)
   end
 
-  it 'includes recipe[faraday]' do
-    expect(subject).to include_recipe('faraday')
-  end
-
   it 'creates user[faraday]' do
     expect(subject).to create_user('faraday')
       .with(home: '/opt/faraday-dev',

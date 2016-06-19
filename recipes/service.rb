@@ -6,8 +6,6 @@
 # Copyright 2015, Sliim
 #
 
-include_recipe 'faraday'
-
 user 'faraday' do
   home node['faraday']['install_dir']
   comment 'Faraday system user'
