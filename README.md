@@ -22,44 +22,29 @@ Attributes
 ----------
 #### faraday::default
 
-|  Key                        |  Type   |  Description                                                           |
-| --------------------------- | ------- | ---------------------------------------------------------------------- |
-| `[faraday][packages]`       | Array   | Package list to install (default: `[git-core, libpq-dev]`)             |
-| `[faraday][git_repository]` | String  | Faraday repository (default: `https://github.com/infobyte/faraday`)    |
-| `[faraday][git_reference]`  | String  | Faraday reference or version (default: `v1.0.20`)                      |
-| `[faraday][install_dir]`    | String  | Faraday install directory (default: `/opt/faraday`)                    |
-| `[faraday][python_runtime]` | String  | Python runtime to use, used for `poise-python` cookbook (default: `2`) |
+|  Key                             |  Type  |  Description                                                                                                |
+| -------------------------------- | ------ | ----------------------------------------------------------------------------------------------------------- |
+| `[faraday][packages]`            | Array  | Package list to install (default: `[git-core, libpq-dev]`)                                                  |
+| `[faraday][gtk_packages]`        | Array  | Python packages to install (default: `[gir1.2-gtk-3.0 gir1.2-vte-2.91 python-pip python-gobject zsh curl]`) |
+| `[faraday][git_repository]`      | String | Faraday repository (default: `https://github.com/infobyte/faraday`)                                         |
+| `[faraday][git_reference]`       | String | Faraday reference or version (default: `v1.0.20`)                                                           |
+| `[faraday][install_dir]`         | String | Faraday install directory (default: `/opt/faraday`)                                                         |
+| `[faraday][python_runtime]`      | String | Python runtime to use, used for `poise-python` cookbook (default: `2`)                                      |
+| `[faraday][user]`                | String | User to configure, must exists (default: `root`)                                                            |
+| `[faraday][home]`                | String | User's home directory (default: `/root`)                                                                    |
+| `[faraday][config]`              | Hash   | Hash of faraday configuration (See attributes file for defaults)                                            |
+| `[faraday][config_attrs]`        | Hash   | XML attributes for faraday configuration (See attributes file for defaults)                                 |
+| `[faraday][cscan][pip_packages]` | Array  | Python packages to install (default: `[python-owasp-zap-v2 w3af-api-client]`)                               |
+| `[faraday][cscan][config]`       | Hash   | Configuration for default cscan (default: `node[faraday][config]`)                                          |
+| `[faraday][cscan][ips]`          | Array  | List of IPs for default cscan (default: `[127.0.0.1]`)                                                      |
+| `[faraday][cscan][websites]`     | Array  | List of websites for default cscan (default: `[http://127.0.0.1:80]`)                                       |
+| `[faraday][service]`             | Hash   | Hash of variables to override for service init script                                                       |
 
-#### faraday::gtk
-|  Key                      |  Type  |  Description                                                                                                |
-| ------------------------- | ------ | ----------------------------------------------------------------------------------------------------------- |
-| `[faraday][gtk_packages]` | Array  | Python packages to install (default: `[gir1.2-gtk-3.0 gir1.2-vte-2.91 python-pip python-gobject zsh curl]`) |
-
-#### faraday::config
-
-|  Key               |  Type  |  Description                                     |
-| ------------------ | ------ | ------------------------------------------------ |
-| `[faraday][user]`  | String | User to configure, must exists (default: `root`) |
-| `[faraday][home]`  | String | User's home directory (default: `/root`)         |
 
 All others attributes in `['faraday']['config']` namespace will generate dynamically the
 configuration file as XML format in `$HOME/.faraday/config/config.xml`.
 
-Use the `['faraday']['config_attrs']` namespace to set xml attributes. See `attributes/config.rb` for more details.
-
-#### faraday::service
-
-|  Key                 |  Type  |  Description                                          |
-| -------------------- | ------ | ----------------------------------------------------- |
-| `[faraday][service]` |  Hash  | Hash of variables to override for service init script |
-
-#### faraday::cscan
-|  Key                             |  Type  |  Description                                                                  |
-| -------------------------------- | ------ | ----------------------------------------------------------------------------- |
-| `[faraday][cscan][pip_packages]` | Array  | Python packages to install (default: `[python-owasp-zap-v2 w3af-api-client]`) |
-| `[faraday][cscan][config]`       | Hash   | Configuration for default cscan (default: `node[faraday][config]`)            |
-| `[faraday][cscan][ips]`          | Array  | List of IPs for default cscan (default: `[127.0.0.1]`)                        |
-| `[faraday][cscan][websites]`     | Array  | List of websites for default cscan (default: `[http://127.0.0.1:80]`)         |
+Use the `['faraday']['config_attrs']` namespace to set xml attributes. See [default attributes](attributes/default.rb) for more details.
 
 Usage
 -----
