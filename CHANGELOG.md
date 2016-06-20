@@ -3,6 +3,13 @@ faraday CHANGELOG
 
 This file is used to list changes made in each version of the faraday cookbook.
 
+1.1.0
+-----
+- Provides multiple ways to install Faraday
+- Add recipe to install GTK dependencies
+- Set default Faraday version to 1.0.21
+- New recipes: `faraday::gtk`, `faraday::package` and `faraday::sources`
+
 1.0.3
 -----
 - Default faraday version: 1.0.20
