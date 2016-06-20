@@ -48,23 +48,9 @@ Use the `['faraday']['config_attrs']` namespace to set xml attributes. See [defa
 
 Usage
 -----
-#### faraday::default
-Include `faraday` in your node's `run_list` to install faraday and its requirements from source:
 
-```json
-{
-  "name":"my_node",
-  "run_list": [
-    "recipe[faraday]"
-  ],
-  "attributes": {
-    "faraday": {
-      "git_reference": "v1.0.20",
-      "install_dir": "/opt/faraday-1.0.20"
-    }
-  }
-}
-```
+### Installation
+You have two ways to install Faraday: 
 
 #### faraday::package
 Use `faraday::package` to only install `python-faraday` package:
@@ -78,8 +64,28 @@ Use `faraday::package` to only install `python-faraday` package:
 }
 ```
 
+#### faraday::sources
+Include `faraday::sources` in your node's `run_list` to install faraday and its requirements from source:
+
+```json
+{
+  "name":"my_node",
+  "run_list": [
+    "recipe[faraday::sources]"
+  ],
+  "attributes": {
+    "faraday": {
+      "git_reference": "v1.0.20",
+      "install_dir": "/opt/faraday-1.0.20"
+    }
+  }
+}
+```
+
+The `faraday::default` recipe will only install package dependencies. It is included in `faraday::package` and `faraday::sources`.
+
 #### faraday::gtk
-Use `faraday::gtk` to only install `gtk` dependencies:
+If you want to use the GTK GUI, you can include `faraday::gtk` to install extra dependencies.
 
 ```json
 {
@@ -90,6 +96,8 @@ Use `faraday::gtk` to only install `gtk` dependencies:
   ]
 }
 ```
+
+### Configuration
 
 #### faraday::config
 Include `faraday::config` in your node's `run_list` to configure faraday for a user:
@@ -106,6 +114,30 @@ Include `faraday::config` in your node's `run_list` to configure faraday for a u
       "config": {
         "couch_uri": "http://127.0.0.1:5984",
         "last_workspace": "my_workspace"
+      }
+    }
+  }
+}
+```
+
+#### faraday::cscan
+Include `faraday::cscan` in your node's `run_list` to configure default continuous scanning:
+
+```json
+{
+  "name":"my_node",
+  "run_list": [
+    "recipe[faraday::cscan]"
+  ],
+  "attributes": {
+    "faraday": {
+      "cscan": {
+        "config": {
+          "couch_uri": "https://couchdb-host:6984",
+          "last_workspace": "cscan_workspace"
+        },
+        "ips": ["192.168.0.1"],
+        "websites": ["http://192.168.0.1"]
       }
     }
   }
@@ -143,42 +175,18 @@ Include `faraday::service` in your node's `run_list` to configure faraday as a s
 }
 ```
 
-#### faraday::cscan
-Include `faraday::cscan` in your node's `run_list` to configure default continuous scanning:
+### Custom resources
 
-```json
-{
-  "name":"my_node",
-  "run_list": [
-    "recipe[faraday::cscan]"
-  ],
-  "attributes": {
-    "faraday": {
-      "cscan": {
-        "config": {
-          "couch_uri": "https://couchdb-host:6984",
-          "last_workspace": "cscan_workspace"
-        },
-        "ips": ["192.168.0.1"],
-        "websites": ["http://192.168.0.1"]
-      }
-    }
-  }
-}
-```
-
-#### Custom resources
-
-##### faraday_config
+#### faraday_config
 This LWRP can be used to deploy many faraday configuration.
 
-###### Actions
+##### Actions
 |  Action   |  Description                             |
 | --------- | ---------------------------------------- |
 | `:create` | Create configuration for a specific user |
 | `:delete` | Delete user's configuration file         |
 
-###### Attributes
+##### Attributes
 |  Attribute     |  Type  |  Description                                                                           |
 | -------------- | ------ | -------------------------------------------------------------------------------------- |
 | `owner`        | String | Owner config file, this is the name attribute of this resource                         |
@@ -188,7 +196,7 @@ This LWRP can be used to deploy many faraday configuration.
 | `config`       | Hash   | Configuration to deploy (default: `{}`)                                                |
 | `config_attrs` | Hash   | Config attributes (default: `{}`)                                                      |
 
-###### Example
+##### Example
 ```ruby
 faraday_config 'sliim' do
   config last_workspace: 'sliim-corp'
@@ -200,16 +208,16 @@ faraday_config 'sliim' do
 end
 ```
 
-##### faraday_cscan
+#### faraday_cscan
 Install and configure a continuous scanning directory.
 
-###### Actions
+##### Actions
 |  Action       |  Description                                |
 | ----------    | ------------------------------------------- |
 | `:install`    | Install a new continuous scanning directory |
 | `:configure`  | Configure a continuous scanning install     |
 
-###### Attributes
+##### Attributes
 |  Attribute       |  Type  |  Description                                                                           |
 | ---------------- | ------ | -------------------------------------------------------------------------------------- |
 | `name`           | String | Continuous scanning name (final dirname will be prepended with `cscan-`)               |
@@ -222,7 +230,7 @@ Install and configure a continuous scanning directory.
 | `cookbook`       | String | Optional cookbook name for templates (default: `faraday`)                              |
 | `crond`          | Hash   | Cron setup. These attributes will be used for `cron_d` resource (default: `{}`)        |
 
-###### Example
+##### Example
 ```ruby
 faraday_cscan 'local' do
   action [:install, :configure]
