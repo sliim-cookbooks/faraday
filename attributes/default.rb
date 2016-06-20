@@ -8,7 +8,7 @@ default['faraday']['packages'] = ['git-core', 'libpq-dev']
 default['faraday']['gtk_packages'] = ['gir1.2-gtk-3.0', 'gir1.2-vte-2.91',
                                       'python-pip', 'python-gobject', 'zsh', 'curl']
 default['faraday']['git_repository'] = 'https://github.com/infobyte/faraday'
-default['faraday']['git_reference'] = 'v1.0.20'
+default['faraday']['git_reference'] = 'v1.0.21'
 default['faraday']['install_dir'] = '/opt/faraday'
 default['faraday']['python_runtime'] = '2'
 
@@ -21,7 +21,7 @@ else
 end
 default['faraday']['config'] = {
   appname: 'Faraday - Penetration Test IDE',
-  version: '1.0.16',
+  version: '1.0.21',
   debug_status: 0,
   font: '-Misc-Fixed-medium-r-normal-*-12-100-100-100-c-70-iso8859-1',
   home_path: '~/',
