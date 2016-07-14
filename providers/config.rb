@@ -31,6 +31,11 @@ action :create do
   user = new_resource.owner
   home = new_resource.home || (user == 'root' ? '/root' : "/home/#{user}")
 
+  directory "#{home}/.faraday" do
+    owner user
+    group user
+  end
+
   directory "#{home}/.faraday/config" do
     owner user
     group user
