@@ -70,25 +70,21 @@ default['faraday']['cscan']['pip_packages'] = %w(python-owasp-zap-v2 w3af-api-cl
 default['faraday']['cscan']['ips'] = ['127.0.0.1']
 default['faraday']['cscan']['websites'] = ['http://127.0.0.1:80']
 default['faraday']['cscan']['config'] = {
-  nmap: 'nmap',
-  openvas: {
-    user: 'admin',
-    password: 'openvas',
-    scan_config: 'Full and fast',
-    alive_test: 'ICMP, TCP-ACK Service &amp; ARP Ping',
-    openvas: 'omp'
-  },
-  burp: '/root/tools/burpsuite_pro_v1.6.26.jar',
-  nikto: 'nikto',
-  w3af: '/root/tools/w3af/w3af_api',
-  w3af_profile: '/root/tools/w3af/profiles/fast_scan.pw3af',
-  zap: '/root/tools/zap/ZAP_D-2015-08-24/zap.sh',
-  nessus: {
-    url: 'https://127.0.0.1:8834',
-    user: 'nessus',
-    pass: 'nessus',
-    profile: 'Basic Network Scan'
-  }
+  CS_NMAP: 'nmap',
+  CS_OPENVAS_USER: 'admin',
+  CS_OPENVAS_PASSWORD: 'openvas',
+  CS_OPENVAS_SCAN_CONFIG: 'Full and fast',
+  CS_OPENVAS_ALIVE_TEST: 'ICMP, TCP-ACK Service &amp; ARP Ping',
+  CS_OPENVAS: 'omp',
+  CS_BURP: '/root/tools/burpsuite_pro_v1.6.26.jar',
+  CS_NIKTO: 'nikto',
+  CS_W3AF: '/root/tools/w3af/w3af_api',
+  CS_PROFILE: '/root/tools/w3af/profiles/fast_scan.pw3af',
+  CS_ZAP: '/root/tools/zap/ZAP_D-2015-08-24/zap.sh',
+  CS_NESSUS_URL: 'https://127.0.0.1:8834',
+  CS_NESSUS_USER: 'nessus',
+  CS_NESSUS_PASS: 'nessus',
+  CS_NESSUS_PROFILE: 'Basic Network Scan'
 }
 
 # Service

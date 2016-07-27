@@ -131,10 +131,13 @@ Include `faraday::cscan` in your node's `run_list` to configure default continuo
   ],
   "attributes": {
     "faraday": {
+      "config": {
+        "couch_uri": "https://couchdb-host:6984",
+        "last_workspace": "cscan_workspace"
+      },
       "cscan": {
         "config": {
-          "couch_uri": "https://couchdb-host:6984",
-          "last_workspace": "cscan_workspace"
+          "CS_NMAP": "sudo nmap"
         },
         "ips": ["192.168.0.1"],
         "websites": ["http://192.168.0.1"]
