@@ -19,6 +19,8 @@
 actions :install, :configure
 
 attribute :name, kind_of: String
+attribute :user, kind_of: String, default: 'root'
+attribute :group, kind_of: String, default: 'root'
 attribute :path,
           kind_of: String,
           default: "#{node['faraday']['install_dir']}/scripts"

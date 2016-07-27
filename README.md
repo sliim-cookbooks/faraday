@@ -221,6 +221,8 @@ Install and configure a continuous scanning directory.
 |  Attribute       |  Type  |  Description                                                                           |
 | ---------------- | ------ | -------------------------------------------------------------------------------------- |
 | `name`           | String | Continuous scanning name (final dirname will be prepended with `cscan-`)               |
+| `user`           | String | User name for file permissions `root`)                                                 |
+| `group`          | String | Group name for file permissions `root`)                                                |
 | `path`           | String | Optional path where will be created cscan dir (default: `FARADAY_INSTALL_DIR/scripts`) |
 | `git_repository` | String | cscan repository (default: `https://github.com/infobyte/cscan`)                        |
 | `git_reference`  | String | cscan reference (default: `master`)                                                    |

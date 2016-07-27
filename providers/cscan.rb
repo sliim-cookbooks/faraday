@@ -24,6 +24,8 @@ end
 
 action :install do
   git "#{new_resource.path}/cscan-#{new_resource.name}" do
+    user new_resource.user
+    group new_resource.group
     repository new_resource.git_repository
     reference new_resource.git_reference
   end
@@ -36,18 +38,24 @@ action :configure do
   dirname = 'cscan' if new_resource.name == 'default'
 
   template "#{new_resource.path}/#{dirname}/config.py" do
+    owner new_resource.user
+    group new_resource.group
     source 'cscan/config.py.erb'
     variables config: new_resource.config
     cookbook new_resource.cookbook
   end
 
   template "#{new_resource.path}/#{dirname}/ips.txt" do
+    owner new_resource.user
+    group new_resource.group
     source 'cscan/targets.erb'
     variables targets: new_resource.ips
     cookbook new_resource.cookbook
   end
 
   template "#{new_resource.path}/#{dirname}/websites.txt" do
+    owner new_resource.user
+    group new_resource.group
     source 'cscan/targets.erb'
     variables targets: new_resource.websites
     cookbook new_resource.cookbook
@@ -63,7 +71,7 @@ action :configure do
       weekday crond[:weekday] || '*'
       day crond[:day] || '*'
       month crond[:month] || '*'
-      user crond[:user] || 'root'
+      user crond[:user] || new_resource.user
       mailto crond[:mailto] if crond[:mailto]
       command crond[:command] || "cd #{new_resource.path}/#{dirname}; cscan.py"
       path "/bin:/usr/bin:#{new_resource.path}/#{dirname}"
