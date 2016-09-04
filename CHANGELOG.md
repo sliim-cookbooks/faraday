@@ -3,6 +3,15 @@ faraday CHANGELOG
 
 This file is used to list changes made in each version of the faraday cookbook.
 
+2.0.0
+-----
+- Default Faraday version: 2.0.0
+- Remove Debian 7 as tested platform
+- Add `faraday::server` recipe to configure Faraday server
+- Update `faraday::service` to run faraday server as service daemon.
+- Improve CScan configuration (Key: Value attributes)
+- Permissions minor fixes
+
 1.1.0
 -----
 - Provides multiple ways to install Faraday
