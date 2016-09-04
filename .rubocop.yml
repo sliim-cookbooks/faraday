@@ -15,3 +15,4 @@ LineLength:
   Exclude:
     - attributes/**/*
     - test/**/*
+    - spec/*

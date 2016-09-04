@@ -6,9 +6,9 @@ require 'chefspec/berkshelf'
 describe 'faraday::sources' do
   let(:subject) do
     ChefSpec::SoloRunner.new do |node|
-      node.set['faraday']['git_repository'] = 'git://remote/faraday.git'
-      node.set['faraday']['git_reference'] = 'dev'
-      node.set['faraday']['install_dir'] = '/opt/faradev'
+      node.override['faraday']['git_repository'] = 'git://remote/faraday.git'
+      node.override['faraday']['git_reference'] = 'dev'
+      node.override['faraday']['install_dir'] = '/opt/faradev'
     end.converge described_recipe
   end
 

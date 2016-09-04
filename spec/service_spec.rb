@@ -5,11 +5,10 @@ require 'chefspec'
 describe 'faraday::service' do
   let(:subject) do
     ChefSpec::SoloRunner.new do |node|
-      node.set['faraday']['install_dir'] = '/opt/faraday-dev'
-      node.set['faraday']['service']['RUN'] = true
-      node.set['faraday']['service']['NAME'] = 'faraday-test'
-      node.set['faraday']['service']['DAEMON_ARGS'] =
-        'faraday.py --gui=no-gui -p 1337'
+      node.override['faraday']['install_dir'] = '/opt/faraday-dev'
+      node.override['faraday']['service']['RUN'] = true
+      node.override['faraday']['service']['NAME'] = 'faraday-test'
+      node.override['faraday']['service']['DAEMON_ARGS'] = 'faraday.py --gui=no-gui -p 1337'
     end.converge(described_recipe)
   end
 

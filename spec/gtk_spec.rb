@@ -6,7 +6,7 @@ require 'chefspec/berkshelf'
 describe 'faraday::gtk' do
   let(:subject) do
     ChefSpec::SoloRunner.new do |node|
-      node.set['faraday']['gtk_packages'] = ['python-gobject', 'zsh', 'curl']
+      node.override['faraday']['gtk_packages'] = ['python-gobject', 'zsh', 'curl']
     end.converge described_recipe
   end
 

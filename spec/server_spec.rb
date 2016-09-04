@@ -6,10 +6,10 @@ require 'chefspec/berkshelf'
 describe 'faraday::server' do
   let(:subject) do
     ChefSpec::SoloRunner.new(step_into: ['faraday_config']) do |node|
-      node.set['faraday']['install_dir'] = '/opt/faradev'
-      node.set['faraday']['user'] = 'faradev'
-      node.set['faraday']['home'] = '/home/faraday'
-      node.set['faraday']['server']['config']['couchdb']['host'] = '10.37.13.42'
+      node.override['faraday']['install_dir'] = '/opt/faradev'
+      node.override['faraday']['user'] = 'faradev'
+      node.override['faraday']['home'] = '/home/faraday'
+      node.override['faraday']['server']['config']['couchdb']['host'] = '10.37.13.42'
     end.converge described_recipe
   end
 

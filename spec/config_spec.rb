@@ -6,11 +6,11 @@ require 'chefspec/berkshelf'
 describe 'faraday::config' do
   let(:subject) do
     ChefSpec::SoloRunner.new(step_into: ['faraday_config']) do |node|
-      node.set['faraday']['user'] = 'faradev'
-      node.set['faraday']['home'] = '/home/faraday'
-      node.set['faraday']['config']['appname'] = 'Faraday - PTI'
-      node.set['faraday']['config']['version'] = '13.37'
-      node.set['faraday']['config_attrs']['appname'] = { foo: 'bar' }
+      node.override['faraday']['user'] = 'faradev'
+      node.override['faraday']['home'] = '/home/faraday'
+      node.override['faraday']['config']['appname'] = 'Faraday - PTI'
+      node.override['faraday']['config']['version'] = '13.37'
+      node.override['faraday']['config_attrs']['appname'] = { foo: 'bar' }
     end.converge described_recipe
   end
 
