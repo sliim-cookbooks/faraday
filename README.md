@@ -26,7 +26,7 @@ Attributes
 | `[faraday][packages]`            | Array  | Package list to install (default: `[git-core, libpq-dev]`)                                                  |
 | `[faraday][gtk_packages]`        | Array  | Python packages to install (default: `[gir1.2-gtk-3.0 gir1.2-vte-2.91 python-pip python-gobject zsh curl]`) |
 | `[faraday][git_repository]`      | String | Faraday repository (default: `https://github.com/infobyte/faraday`)                                         |
-| `[faraday][git_reference]`       | String | Faraday reference or version (default: `v2.0.0`)                                                           |
+| `[faraday][git_reference]`       | String | Faraday reference or version (default: `v2.0.0`)                                                            |
 | `[faraday][install_dir]`         | String | Faraday install directory (default: `/opt/faraday`)                                                         |
 | `[faraday][python_runtime]`      | String | Python runtime to use, used for `poise-python` cookbook (default: `2`)                                      |
 | `[faraday][user]`                | String | User to configure, must exists (default: `root`)                                                            |
@@ -38,6 +38,9 @@ Attributes
 | `[faraday][cscan][ips]`          | Array  | List of IPs for default cscan (default: `[127.0.0.1]`)                                                      |
 | `[faraday][cscan][websites]`     | Array  | List of websites for default cscan (default: `[http://127.0.0.1:80]`)                                       |
 | `[faraday][service]`             | Hash   | Hash of variables to override for service init script                                                       |
+| `[faraday][server][www]`         | Hash   | Faraday server www setup                                                                                    |
+| `[faraday][server][config]`      | Hash   | Faraday server configuration hash                                                                           |
+
 
 
 All others attributes in `['faraday']['config']` namespace will generate dynamically the
@@ -74,8 +77,8 @@ Include `faraday::sources` in your node's `run_list` to install faraday and its 
   ],
   "attributes": {
     "faraday": {
-      "git_reference": "v1.0.20",
-      "install_dir": "/opt/faraday-1.0.20"
+      "git_reference": "v2.0.0",
+      "install_dir": "/opt/faraday-2.0.0"
     }
   }
 }
@@ -146,31 +149,64 @@ Include `faraday::cscan` in your node's `run_list` to configure default continuo
 }
 ```
 
-#### faraday::service
-Include `faraday::service` in your node's `run_list` to configure faraday as a server (*Experimental*):
+#### faraday::server
+Include `faraday::server` in your node's `run_list` to configure Faraday Server:
 
 ```json
 {
   "name":"my_node",
   "run_list": [
     "recipe[faraday]",
+    "recipe[faraday::server]"
+  ],
+  "attributes": {
+    "faraday": {
+      "git_reference": "v2.0.0",
+      "install_dir": "/opt/faraday",
+      "python_runtime": "2",
+      "config": {
+        "version": "2.0.0",
+        "couch_uri": "http://127.0.0.1:5985"
+      },
+      "server": {
+        "config": {
+          "couchdb": {
+            "host": "couchdb.host"
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+#### faraday::service
+Include `faraday::service` to setup service for your Faraday server:
+
+```json
+{
+  "name":"my_node",
+  "run_list": [
+    "recipe[faraday]",
+    "recipe[faraday::server]",
     "recipe[faraday::service]"
   ],
   "attributes": {
     "faraday": {
-      "git_reference": "v1.0.20",
+      "git_reference": "v2.0.0",
       "install_dir": "/opt/faraday",
       "python_runtime": "2",
+      "config": {
+        "version": "2.0.0",
+        "couch_uri": "http://127.0.0.1:5985"
+      },
       "service": {
         "RUN": "true",
         "NAME": "faraday-server",
         "USER": "faraday",
         "INSTALL_DIR": "/opt/faraday",
-        "DAEMON_ARGS": "faraday.py --gui=no-gui --port 31337"
-      },
-      "config": {
-        "version": "1.0.20",
-        "couch_uri": "http://127.0.0.1:5984"
+        "DAEMON": "faraday-server.py",
+        "DAEMON_ARGS": "--debug"
       }
     }
   }

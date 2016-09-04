@@ -35,6 +35,9 @@ suites:
         install_dir: /opt/faraday-test
         service:
           RUN: true
+          INSTALL_DIR: /opt/faraday-test
+          DAEMON: faraday-server.py
+          DAEMON_ARGS: --debug
   - name: faraday-cscan
     run_list:
       - recipe[faraday::sources]
