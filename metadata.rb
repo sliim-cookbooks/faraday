@@ -20,7 +20,7 @@ recipe 'faraday::server', 'Setup faraday server configuration'
 depends 'poise-python'
 depends 'cron'
 
-supports 'debian', '> 7.0'
+supports 'debian', '> 8.0'
 
 source_url 'https://github.com/sliim-cookbooks/faraday' if
   respond_to?(:source_url)

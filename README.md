@@ -15,7 +15,6 @@ Requirements
 
 #### Platforms
 The following platforms and versions are tested and supported using Opscode's test-kitchen.
-- `Debian 7`
 - `Debian 8`
 
 Attributes

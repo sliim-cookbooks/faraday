@@ -8,10 +8,6 @@ provisioner:
   name: chef_zero
 
 platforms:
-  - name: debian-7
-    run_list:
-      - recipe[apt]
-      - recipe[couchdb]
   - name: debian-8
     run_list:
       - recipe[apt]
