@@ -36,8 +36,10 @@ suites:
     run_list:
       - recipe[faraday::sources]
       - recipe[faraday::service]
+      - recipe[faraday::server]
     attributes:
       faraday:
+        user: faraday
         install_dir: /opt/faraday-test
         service:
           RUN: true

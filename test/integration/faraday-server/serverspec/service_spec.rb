@@ -30,3 +30,7 @@ describe file '/etc/init.d/faraday-server' do
   it { should be_grouped_into 'root' }
   it { should be_mode 755 }
 end
+
+describe service 'faraday-server' do
+  it { should be_enabled }
+end

@@ -23,6 +23,12 @@ template "#{node['faraday']['install_dir']}/server/www/config/config.json" do
   variables server_config: node['faraday']['server']['www']
 end
 
+directory "#{node['faraday']['home']}/.faraday/config" do
+  owner node['faraday']['user']
+  group node['faraday']['user']
+  recursive true
+end
+
 template "#{node['faraday']['home']}/.faraday/config/server.ini" do
   owner node['faraday']['user']
   group node['faraday']['user']

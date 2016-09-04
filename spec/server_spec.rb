@@ -25,6 +25,13 @@ describe 'faraday::server' do
       .with_content(/{"lic_db":"faraday_license","ver":""}/)
   end
 
+  it 'creates directory[/home/faraday/.faraday/config]' do
+    expect(subject).to create_directory('/home/faraday/.faraday/config')
+      .with(owner: 'faradev',
+            group: 'faradev',
+            recursive: true)
+  end
+
   it 'creates template[/home/faraday/.faraday/config/server.ini]' do
     config_file = '/home/faraday/.faraday/config/server.ini'
     matches = [/^\[faraday_server\]$/,
