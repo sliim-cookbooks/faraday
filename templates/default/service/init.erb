@@ -13,16 +13,16 @@ DESC="Faraday server"
 NAME=faraday-server
 USER=faraday
 INSTALL_DIR=/opt/faraday
-DAEMON="$INSTALL_DIR/.venv/bin/python"
+DAEMON="faraday-server.py"
 PIDFILE="/run/$NAME/$NAME.pid"
 LOGFILE="/var/log/$NAME/$NAME.log"
-DAEMON_ARGS="faraday.py --gui=no-gui"
+DAEMON_ARGS=""
 PATH=/sbin:/usr/sbin:/bin:/usr/bin:$INSTALL_DIR/.venv/bin
 
 [ -r /etc/default/$NAME ] && . /etc/default/$NAME
 
 # Exit if the package is not installed
-[ -x "$DAEMON" ] || exit 0
+[ -x "$INSTALL_DIR/$DAEMON" ] || exit 1
 
 # Source function library.
 <% case node['platform_family'] -%>
@@ -48,7 +48,7 @@ do_start()
     if ( [ -e $PIDFILE ] && ps -p $PID 1>&2 > /dev/null )
     then
         log_action_end_msg 1 "already running, PID's $PID"
-        exit 0
+        return 0
     elif ( [ -w $PIDFILE ] )
     then
         log_warning_msg "PID file found while ${NAME} is not running, removing file."
@@ -57,10 +57,10 @@ do_start()
 
     if [ "$RUN" != "true" ]; then
         log_action_msg "Not starting faraday: disabled by /etc/default/$NAME".
-        exit 0
+        return 2
     fi
 
-    start-stop-daemon --start --chuid $USER --pidfile=$PIDFILE -b --no-close -m -d $INSTALL_DIR --exec $DAEMON -- $DAEMON_ARGS >> $LOGFILE 2>&1 || return 2
+    start-stop-daemon --start --chuid $USER --pidfile=$PIDFILE -b --no-close -m -d $INSTALL_DIR --exec $INSTALL_DIR/$DAEMON -- $DAEMON_ARGS >> $LOGFILE 2>&1 || return 2
     [ -e "$PIDFILE" ] && chown $USER $PIDFILE
     return 0
 }
@@ -94,7 +94,7 @@ case "$1" in
     esac
     ;;
   status)
-    status_of_proc -p "$PIDFILE" "$DAEMON" "$NAME"
+    status_of_proc -p "$PIDFILE" "$INSTALL_DIR/$DAEMON" "$NAME"
     ;;
   restart|force-reload)
     do_stop
