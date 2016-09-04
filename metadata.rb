@@ -15,6 +15,7 @@ recipe 'faraday::gtk', 'Install required packages for GTK GUI'
 recipe 'faraday::config', 'Configure Faraday for a specific user'
 recipe 'faraday::service', 'Configure a Faraday server'
 recipe 'faraday::cscan', 'Install continuous scanning tool'
+recipe 'faraday::server', 'Setup faraday server configuration'
 
 depends 'poise-python'
 depends 'cron'

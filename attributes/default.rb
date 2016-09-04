@@ -94,3 +94,28 @@ default['faraday']['service'] = {
   USER: 'faraday',
   INSTALL_DIR: node['faraday']['install_dir']
 }
+
+# Server
+default['faraday']['server']['www'] = {
+  lic_db: 'faraday_license',
+  ver: ''
+}
+default['faraday']['server']['config'] = {
+  faraday_server: {
+    port: 5985,
+    bind_address: 'localhost'
+  },
+  ssl: {
+    port: 6985,
+    certificate: '',
+    keyfile: ''
+  },
+  couchdb: {
+    host: 'localhost',
+    port: 5984,
+    ssl_port: 6984,
+    user: '',
+    password: '',
+    protocol: 'http'
+  }
+}
