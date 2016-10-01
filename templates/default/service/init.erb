@@ -21,6 +21,9 @@ PATH=/sbin:/usr/sbin:/bin:/usr/bin:$INSTALL_DIR/.venv/bin
 
 [ -r /etc/default/$NAME ] && . /etc/default/$NAME
 
+# Activate virtualenv if exists
+[ -d $INSTALL_DIR/.venv ] && . $INSTALL_DIR/.venv/bin/activate
+
 # Exit if the package is not installed
 [ -x "$INSTALL_DIR/$DAEMON" ] || exit 1
 
