@@ -34,7 +34,7 @@ Attributes
 | `[faraday][config]`              | Hash   | Hash of faraday configuration (See attributes file for defaults)                                            |
 | `[faraday][config_attrs]`        | Hash   | XML attributes for faraday configuration (See attributes file for defaults)                                 |
 | `[faraday][cscan][pip_packages]` | Array  | Python packages to install (default: `[python-owasp-zap-v2 w3af-api-client]`)                               |
-| `[faraday][cscan][config]`       | Hash   | Configuration for default cscan (default: `node[faraday][config]`)                                          |
+| `[faraday][cscan][config]`       | Hash   | Configuration for default cscan (see attributes file for defaults)                                          |
 | `[faraday][cscan][ips]`          | Array  | List of IPs for default cscan (default: `[127.0.0.1]`)                                                      |
 | `[faraday][cscan][websites]`     | Array  | List of websites for default cscan (default: `[http://127.0.0.1:80]`)                                       |
 | `[faraday][service]`             | Hash   | Hash of variables to override for service init script                                                       |
