@@ -3,6 +3,13 @@ faraday CHANGELOG
 
 This file is used to list changes made in each version of the faraday cookbook.
 
+2.1.0
+-----
+- server/service improvements:
+  - install pip requirement when installed from sources
+  - activate virtualenv in init script when installed from sources
+- Enabled system_site_packages in virtualenv
+
 2.0.0
 -----
 - Default Faraday version: 2.0.0

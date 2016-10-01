@@ -6,7 +6,7 @@ maintainer_email 'sliim@mailoo.org'
 license 'Apache 2.0'
 description 'Installs/Configures Faraday'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version '2.0.0'
+version '2.1.0'
 
 recipe 'faraday::default', 'Install faraday packages dependencies'
 recipe 'faraday::package', 'Install python-faraday package'
