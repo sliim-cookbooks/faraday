@@ -27,6 +27,7 @@ python_runtime node['faraday']['python_runtime']
 
 python_virtualenv 'faraday-venv' do
   path "#{node['faraday']['install_dir']}/.venv"
+  system_site_packages true
 end
 
 pip_requirements "#{node['faraday']['install_dir']}/requirements.txt" do
