@@ -16,7 +16,9 @@
 # limitations under the License.
 #
 
-template "#{node['faraday']['install_dir']}/server/www/config/config.json" do
+faradir = node['faraday']['install_dir']
+
+template "#{faradir}/server/www/config/config.json" do
   owner node['faraday']['user']
   group node['faraday']['user']
   source 'server/config.json.erb'
@@ -34,4 +36,11 @@ template "#{node['faraday']['home']}/.faraday/config/server.ini" do
   group node['faraday']['user']
   source 'server/config.ini.erb'
   variables server_config: node['faraday']['server']['config']
+end
+
+if node.recipe? 'faraday::sources'
+  pip_requirements "#{faradir}/requirements_server.txt" do
+    python node['faraday']['python_runtime']
+    virtualenv 'faraday-venv'
+  end
 end
