@@ -3,6 +3,10 @@ faraday CHANGELOG
 
 This file is used to list changes made in each version of the faraday cookbook.
 
+2.1.1
+-----
+- Restart faraday server when configuration changed
+
 2.1.0
 -----
 - server/service improvements:
