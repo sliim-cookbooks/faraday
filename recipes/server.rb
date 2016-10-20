@@ -18,11 +18,18 @@
 
 faradir = node['faraday']['install_dir']
 
+with_run_context :root do
+  find_resource(:service, 'faraday-server') do
+    action :nothing
+  end
+end
+
 template "#{faradir}/server/www/config/config.json" do
   owner node['faraday']['user']
   group node['faraday']['user']
   source 'server/config.json.erb'
   variables server_config: node['faraday']['server']['www']
+  notifies :restart, 'service[faraday-server]', :delayed
 end
 
 directory "#{node['faraday']['home']}/.faraday/config" do
@@ -36,6 +43,7 @@ template "#{node['faraday']['home']}/.faraday/config/server.ini" do
   group node['faraday']['user']
   source 'server/config.ini.erb'
   variables server_config: node['faraday']['server']['config']
+  notifies :restart, 'service[faraday-server]', :delayed
 end
 
 if node.recipe? 'faraday::sources'
