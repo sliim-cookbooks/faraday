@@ -14,11 +14,8 @@ default['faraday']['python_runtime'] = '2'
 
 # Configuration
 default['faraday']['user'] = 'root'
-if node['faraday']['user'] == 'root'
-  default['faraday']['home'] = '/root'
-else
-  default['faraday']['home'] = "/home/#{node['faraday']['user']}"
-end
+
+default['faraday']['home'] = node['faraday']['user'] == 'root' ? '/root' : "/home/#{node['faraday']['user']}"
 default['faraday']['config'] = {
   appname: 'Faraday - Penetration Test IDE',
   version: '2.0.0',
