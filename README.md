@@ -8,10 +8,8 @@ Requirements
 ------------
 #### Cookbooks
 - `poise-python` - https://supermarket.chef.io/cookbooks/poise-python
+- `couchdb` - https://supermarket.chef.io/cookbooks/couchdb
 - `cron` - https://supermarket.chef.io/cookbooks/cron
-
-#### Services
-- `couchdb`
 
 #### Platforms
 The following platforms and versions are tested and supported using Opscode's test-kitchen.

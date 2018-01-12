@@ -1,3 +1,12 @@
 language: ruby
 rvm:
-  - 2.3.0
+  - 2.3.1
+services:
+  - docker
+env:
+  - KITCHEN_YAML=.kitchen.docker.yml
+before_script:
+  - bundle exec rake vendor
+script:
+  - bundle exec rake
+  - bundle exec rake test:kitchen

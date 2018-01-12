@@ -8,19 +8,18 @@ provisioner:
   name: chef_zero
 
 platforms:
-  - name: debian-8
+  - name: debian-9
     run_list:
       - recipe[apt]
       - recipe[build-essential]
-      - recipe[couchdb::source]
     attributes:
       couch_db:
-        src_version: 1.6.1
-        src_checksum: 5a601b173733ce3ed31b654805c793aa907131cd70b06d03825f169aa48c8627
+        configure_flags: ""
 
 suites:
   - name: faraday
     run_list:
+      - recipe[faraday::couchdb]
       - recipe[faraday::sources]
       - recipe[faraday::config]
       - recipe[faraday-lwrp::config]
@@ -30,6 +29,7 @@ suites:
         user: kitchen
   - name: faraday-server
     run_list:
+      - recipe[faraday::couchdb]
       - recipe[faraday::sources]
       - recipe[faraday::service]
       - recipe[faraday::server]
@@ -44,6 +44,7 @@ suites:
           DAEMON_ARGS: --debug
   - name: faraday-cscan
     run_list:
+      - recipe[faraday::couchdb]
       - recipe[faraday::sources]
       - recipe[faraday::cscan]
       - recipe[faraday-lwrp::cscan]

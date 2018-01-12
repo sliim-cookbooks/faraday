@@ -20,6 +20,7 @@ recipe 'faraday::server', 'Setup faraday server configuration'
 
 depends 'poise-python'
 depends 'cron'
+depends 'couchdb'
 
 supports 'debian', '> 8.0'
 
