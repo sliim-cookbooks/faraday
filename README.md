@@ -24,7 +24,7 @@ Attributes
 | `[faraday][packages]`            | Array  | Package list to install (default: `[git-core, libpq-dev]`)                                                  |
 | `[faraday][gtk_packages]`        | Array  | Python packages to install (default: `[gir1.2-gtk-3.0 gir1.2-vte-2.91 python-pip python-gobject zsh curl]`) |
 | `[faraday][git_repository]`      | String | Faraday repository (default: `https://github.com/infobyte/faraday`)                                         |
-| `[faraday][git_reference]`       | String | Faraday reference or version (default: `v2.0.0`)                                                            |
+| `[faraday][git_reference]`       | String | Faraday reference or version (default: `v2.7.1`)                                                            |
 | `[faraday][install_dir]`         | String | Faraday install directory (default: `/opt/faraday`)                                                         |
 | `[faraday][python_runtime]`      | String | Python runtime to use, used for `poise-python` cookbook (default: `2`)                                      |
 | `[faraday][user]`                | String | User to configure, must exists (default: `root`)                                                            |
