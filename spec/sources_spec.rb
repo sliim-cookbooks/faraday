@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
-require 'chefspec'
-require 'chefspec/berkshelf'
+require_relative 'spec_helper'
 
 describe 'faraday::sources' do
   let(:subject) do
-    ChefSpec::SoloRunner.new do |node|
+    ChefSpec::SoloRunner.new(platform: 'debian',
+                             version: '9.0') do |node|
       node.override['faraday']['git_repository'] = 'git://remote/faraday.git'
       node.override['faraday']['git_reference'] = 'dev'
       node.override['faraday']['install_dir'] = '/opt/faradev'
@@ -22,13 +22,8 @@ describe 'faraday::sources' do
             reference: 'dev')
   end
 
-  it 'installs python_runtime[2]' do
-    expect(subject).to install_python_runtime('2')
-  end
-
-  it 'creates python_virtualenv[faraday-venv]' do
-    expect(subject).to create_python_virtualenv('faraday-venv')
-      .with(path: '/opt/faradev/.venv')
+  it 'includes recipe[faraday::python]' do
+    expect(subject).to include_recipe('faraday::python')
   end
 
   # FIXME: ArgumentError when trying to expect pip requirements

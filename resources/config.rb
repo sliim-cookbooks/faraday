@@ -17,6 +17,8 @@
 #
 
 actions :create, :delete
+default_action :create
+resource_name :faraday_config
 
 attribute :owner, kind_of: String, name_attribute: true
 attribute :home, kind_of: String, default: nil
@@ -24,9 +26,3 @@ attribute :file, kind_of: String, default: 'config.xml'
 attribute :cookbook, kind_of: String, default: 'faraday'
 attribute :config, kind_of: Hash, default: {}
 attribute :config_attrs, kind_of: Hash, default: {}
-
-def initialize(*args)
-  super
-  @action = :create
-  @resource_name = :faraday_config
-end

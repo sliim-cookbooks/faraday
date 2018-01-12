@@ -1,3 +1,6 @@
 .kitchen
 Gemfile.lock
 Berksfile.lock
+/.bundle
+/cookbooks
+/vendor

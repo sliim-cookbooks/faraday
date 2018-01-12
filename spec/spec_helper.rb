@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 #
 # Cookbook Name:: faraday
-# Recipe:: sources
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,14 +15,11 @@
 # limitations under the License.
 #
 
-include_recipe 'faraday'
-git node['faraday']['install_dir'] do
-  repository node['faraday']['git_repository']
-  reference node['faraday']['git_reference']
+require 'chefspec'
+require 'chefspec/berkshelf'
+
+RSpec.configure do |config|
+  config.log_level = :error
 end
 
-include_recipe 'faraday::python'
-pip_requirements "#{node['faraday']['install_dir']}/requirements.txt" do
-  python node['faraday']['python_runtime']
-  virtualenv 'faraday-venv'
-end
+ChefSpec::Coverage.start! { add_filter 'faraday' }

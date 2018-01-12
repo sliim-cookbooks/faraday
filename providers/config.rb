@@ -50,8 +50,6 @@ action :create do
     variables config: config,
               attrs: attrs
   end
-
-  new_resource.updated_by_last_action(true)
 end
 
 action :delete do
@@ -61,6 +59,4 @@ action :delete do
   file "#{home}/.faraday/config/#{new_resource.file}" do
     action :delete
   end
-
-  new_resource.updated_by_last_action(true)
 end

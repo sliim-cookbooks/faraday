@@ -22,7 +22,7 @@ namespace :test do
   end
 
   task :foodcritic do
-    bundle_exec 'foodcritic -f any . -t ~FC023'
+    bundle_exec 'foodcritic -f any .'
   end
 
   task :cookstyle do

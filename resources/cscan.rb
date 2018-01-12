@@ -17,6 +17,8 @@
 #
 
 actions :install, :configure
+default_action :install
+resource_name :faraday_cscan
 
 attribute :name, kind_of: String
 attribute :user, kind_of: String, default: 'root'
@@ -35,9 +37,3 @@ attribute :config,
           default: node['faraday']['cscan']['config']
 attribute :cookbook, kind_of: String, default: 'faraday'
 attribute :crond, kind_of: Hash, default: {}
-
-def initialize(*args)
-  super
-  @action = :create
-  @resource_name = :faraday_cscan
-end

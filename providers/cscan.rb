@@ -29,8 +29,6 @@ action :install do
     repository new_resource.git_repository
     reference new_resource.git_reference
   end
-
-  new_resource.updated_by_last_action(true)
 end
 
 action :configure do
@@ -77,6 +75,4 @@ action :configure do
       path "/bin:/usr/bin:#{new_resource.path}/#{dirname}"
     end
   end
-
-  new_resource.updated_by_last_action(true)
 end

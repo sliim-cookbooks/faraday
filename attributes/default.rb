@@ -50,16 +50,16 @@ default['faraday']['config'] = {
   updates_uri: 'https://www.faradaysec.com/scripts/updates.php',
   tickets_uri: 'https://www.faradaysec.com/scripts/listener.php',
   tickets_template: '{}',
-  tickets_api: '{}'
+  tickets_api: '{}',
 }
 default['faraday']['config_attrs'] = {
   repo_url: {
-    type: 'svn'
+    type: 'svn',
   },
   auth: {
     encrypted: 'no',
-    algorithm: 'OTR'
-  }
+    algorithm: 'OTR',
+  },
 }
 
 # Continuous scanning
@@ -81,7 +81,7 @@ default['faraday']['cscan']['config'] = {
   CS_NESSUS_URL: 'https://127.0.0.1:8834',
   CS_NESSUS_USER: 'nessus',
   CS_NESSUS_PASS: 'nessus',
-  CS_NESSUS_PROFILE: 'Basic Network Scan'
+  CS_NESSUS_PROFILE: 'Basic Network Scan',
 }
 
 # Service
@@ -89,23 +89,23 @@ default['faraday']['service'] = {
   RUN: true,
   NAME: 'faraday-server',
   USER: 'faraday',
-  INSTALL_DIR: node['faraday']['install_dir']
+  INSTALL_DIR: node['faraday']['install_dir'],
 }
 
 # Server
 default['faraday']['server']['www'] = {
   lic_db: 'faraday_license',
-  ver: ''
+  ver: '',
 }
 default['faraday']['server']['config'] = {
   faraday_server: {
     port: 5985,
-    bind_address: 'localhost'
+    bind_address: 'localhost',
   },
   ssl: {
     port: 6985,
     certificate: '',
-    keyfile: ''
+    keyfile: '',
   },
   couchdb: {
     host: 'localhost',
@@ -113,6 +113,6 @@ default['faraday']['server']['config'] = {
     ssl_port: 6984,
     user: '',
     password: '',
-    protocol: 'http'
-  }
+    protocol: 'http',
+  },
 }

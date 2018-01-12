@@ -3,9 +3,10 @@
 name 'faraday'
 maintainer 'Sliim'
 maintainer_email 'sliim@mailoo.org'
-license 'Apache 2.0'
+license 'Apache-2.0'
 description 'Installs/Configures Faraday'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
+chef_version '>= 12.5' if respond_to?(:chef_version)
 version '2.1.1'
 
 recipe 'faraday::default', 'Install faraday packages dependencies'

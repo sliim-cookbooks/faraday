@@ -46,9 +46,10 @@ template "#{node['faraday']['home']}/.faraday/config/server.ini" do
   notifies :restart, 'service[faraday-server]', :delayed
 end
 
-if node.recipe? 'faraday::sources'
-  pip_requirements "#{faradir}/requirements_server.txt" do
-    python node['faraday']['python_runtime']
-    virtualenv 'faraday-venv'
-  end
+include_recipe 'faraday::python'
+
+pip_requirements "#{faradir}/requirements_server.txt" do
+  python node['faraday']['python_runtime']
+  virtualenv 'faraday-venv'
+  only_if { node.recipe? 'faraday::sources' }
 end

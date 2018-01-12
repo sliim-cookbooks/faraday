@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 
-require 'chefspec'
-require 'chefspec/berkshelf'
+require_relative 'spec_helper'
 
 describe 'faraday::config' do
   let(:subject) do
-    ChefSpec::SoloRunner.new(step_into: ['faraday_config']) do |node|
+    ChefSpec::SoloRunner.new(step_into: ['faraday_config'],
+                             platform: 'debian',
+                             version: '9.0') do |node|
       node.override['faraday']['user'] = 'faradev'
       node.override['faraday']['home'] = '/home/faraday'
       node.override['faraday']['config']['appname'] = 'Faraday - PTI'

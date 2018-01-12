@@ -9,7 +9,7 @@
 user 'faraday' do
   home node['faraday']['install_dir']
   comment 'Faraday system user'
-  supports manage_home: false
+  manage_home false
   system true
 end
 
