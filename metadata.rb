@@ -27,4 +27,4 @@ supports 'debian', '> 8.0'
 source_url 'https://github.com/sliim-cookbooks/faraday' if
   respond_to?(:source_url)
 issues_url 'https://github.com/sliim-cookbooks/faraday/issues' if
-    respond_to?(:issues_url)
+  respond_to?(:issues_url)
