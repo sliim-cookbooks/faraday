@@ -4,7 +4,7 @@
 # Attributes:: default
 #
 
-default['faraday']['packages'] = ['git-core', 'libpq-dev']
+default['faraday']['packages'] = ['git', 'libpq-dev']
 default['faraday']['gtk_packages'] = ['gir1.2-gtk-3.0', 'gir1.2-vte-2.91',
                                       'python-pip', 'python-gobject', 'zsh', 'curl']
 default['faraday']['git_repository'] = 'https://github.com/infobyte/faraday'
