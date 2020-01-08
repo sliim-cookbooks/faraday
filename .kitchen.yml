@@ -3,6 +3,10 @@ driver_plugin: vagrant
 driver_config:
   require_chef_omnibus: true
 
+provisioner:
+  name: chef_zero
+  chef_license: accept
+
 platforms:
   - name: debian-8.2
     run_list:
