@@ -6,11 +6,11 @@ describe 'faraday::gtk' do
   let(:subject) do
     ChefSpec::SoloRunner.new(platform: 'debian',
                              version: '9.0') do |node|
-      node.override['faraday']['gtk_packages'] = ['python-gobject', 'zsh', 'curl']
+      node.override['faraday']['gtk_packages'] = %w(python-gobject zsh curl)
     end.converge described_recipe
   end
 
-  ['python-gobject', 'zsh', 'curl'].each do |pkg|
+  %w(python-gobject zsh curl).each do |pkg|
     it "installs package[#{pkg}]" do
       expect(subject).to install_package(pkg)
     end

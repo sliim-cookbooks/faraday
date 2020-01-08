@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Cookbook Name:: faraday
+# Cookbook:: faraday
 # Provider:: cscan
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,12 +15,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
-use_inline_resources
-
-def whyrun_supported?
-  true
-end
 
 action :install do
   git "#{new_resource.path}/cscan-#{new_resource.name}" do

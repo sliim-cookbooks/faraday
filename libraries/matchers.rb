@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Cookbook Name:: faraday
+# Cookbook:: faraday
 # Library:: matchers
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,16 +16,14 @@
 # limitations under the License.
 #
 
-if defined?(ChefSpec)
-  def create_faraday_config(path)
-    ChefSpec::Matchers::ResourceMatcher.new(:faraday_config, :create, path)
-  end
+def create_faraday_config(path)
+  ChefSpec::Matchers::ResourceMatcher.new(:faraday_config, :create, path)
+end
 
-  def install_faraday_cscan(name)
-    ChefSpec::Matchers::ResourceMatcher.new(:faraday_cscan, :install, name)
-  end
+def install_faraday_cscan(name)
+  ChefSpec::Matchers::ResourceMatcher.new(:faraday_cscan, :install, name)
+end
 
-  def configure_faraday_cscan(name)
-    ChefSpec::Matchers::ResourceMatcher.new(:faraday_cscan, :configure, name)
-  end
+def configure_faraday_cscan(name)
+  ChefSpec::Matchers::ResourceMatcher.new(:faraday_cscan, :configure, name)
 end
