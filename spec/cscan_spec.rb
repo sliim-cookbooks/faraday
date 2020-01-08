@@ -4,8 +4,7 @@ require_relative 'spec_helper'
 
 describe 'faraday::cscan' do
   let(:subject) do
-    ChefSpec::SoloRunner.new(platform: 'debian',
-                             version: '9.0') do |node|
+    ChefSpec::SoloRunner.new do |node|
       node.override['faraday']['install_dir'] = '/opt/faraday-dev'
       node.override['faraday']['cscan']['ips'] = ['192.168.0.42']
       node.override['faraday']['cscan']['websites'] = ['http://192.168.0.42']

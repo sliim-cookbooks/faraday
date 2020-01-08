@@ -4,8 +4,7 @@ require_relative 'spec_helper'
 
 describe 'faraday::python' do
   let(:subject) do
-    ChefSpec::SoloRunner.new(platform: 'debian',
-                             version: '9.0') do |node|
+    ChefSpec::SoloRunner.new do |node|
       node.override['faraday']['install_dir'] = '/opt/faradev'
       node.override['faraday']['python_runtime'] = '2'
     end.converge described_recipe

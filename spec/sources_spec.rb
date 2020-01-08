@@ -4,8 +4,7 @@ require_relative 'spec_helper'
 
 describe 'faraday::sources' do
   let(:subject) do
-    ChefSpec::SoloRunner.new(platform: 'debian',
-                             version: '9.0') do |node|
+    ChefSpec::SoloRunner.new do |node|
       node.override['faraday']['git_repository'] = 'git://remote/faraday.git'
       node.override['faraday']['git_reference'] = 'dev'
       node.override['faraday']['install_dir'] = '/opt/faradev'

@@ -4,8 +4,7 @@ require_relative 'spec_helper'
 
 describe 'faraday::service' do
   let(:subject) do
-    ChefSpec::SoloRunner.new(platform: 'debian',
-                             version: '9.0') do |node|
+    ChefSpec::SoloRunner.new do |node|
       node.override['faraday']['install_dir'] = '/opt/faraday-dev'
       node.override['faraday']['service']['RUN'] = true
       node.override['faraday']['service']['NAME'] = 'faraday-test'

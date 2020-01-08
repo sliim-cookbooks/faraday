@@ -4,9 +4,7 @@ require_relative 'spec_helper'
 
 describe 'faraday::server' do
   let(:subject) do
-    ChefSpec::SoloRunner.new(step_into: ['faraday_config'],
-                             platform: 'debian',
-                             version: '9.0') do |node|
+    ChefSpec::SoloRunner.new(step_into: ['faraday_config']) do |node|
       node.override['faraday']['install_dir'] = '/opt/faradev'
       node.override['faraday']['user'] = 'faradev'
       node.override['faraday']['home'] = '/home/faraday'
